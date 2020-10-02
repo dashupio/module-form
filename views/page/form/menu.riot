@@ -1,0 +1,40 @@
+<page-form-menu>
+  <a if={ props.item && props.item._id } class={ `ml-2 btn btn-outline-danger` }>
+    <i class="fa fa-trash" />
+  </a>
+  <a if={ props.item && props.item._id } class={ `ml-2 btn btn-outline-success` }>
+    <i class="fa fa-plus mr-2" /> Add New
+  </a>
+  <button if={ props.dashup.can(props.page, 'manage') } class={ `ml-2 btn btn-${!props.altering ? 'outline-' : ''}primary` } onclick={ (e) => onPreview(e) }>
+    <i class={ `fa fa-${!props.altering ? 'pencil' : 'check'} mr-2` } /> { !props.altering ? 'Alter Form' : 'Finish Altering' }
+  </button>
+
+  <script>
+  
+    // export default
+    export default class PageFormMenu {
+      
+      /**
+       * on before mount
+       */
+      onBeforeMount(...args) {
+        // submit
+        this.onPreview = this.onPreview.bind(this);
+      }
+
+      /**
+       * on preview
+       *
+       * @param {Event} e
+       */
+      onPreview(e) {
+        // prevent
+        e.preventDefault();
+        e.stopPropagation();
+
+        // submit form
+        this.props.props('altering', !this.props.altering);
+      }
+    }
+  </script>
+</page-form-menu>

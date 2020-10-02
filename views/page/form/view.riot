@@ -1,0 +1,127 @@
+<page-form-view>
+  <div>
+    <a href="#!" class="d-block alert alert-info mb-3" if={ !props.page.get('data.model') } onclick={ (e) => props.onConfig(e) }>
+      <i class="fa fa-exclamation-triangle mr-2" />
+      Please select a <b>model</b> for the form.
+    </a>
+
+    <div class="px-0 px-lg-3 container-lg">
+      <div class="card">
+        <div class="card-body">
+          <dashup-view ref={ ref('form') } view="form" type="page" preview={ !props.altering } on-data={ (data) => onData(data) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
+        </div>
+
+        <div class="card-footer text-right pt-0 pb-3">
+          <button if={ !loading('submit') } class="btn btn-success" onclick={ (e) => onSubmit(e) }>
+            { props.item ? 'Update' : 'Submit' }
+          </button>
+          <button if={ loading('submit') } class="btn btn-success disabled">
+            { props.item ? 'Updating...' : 'Submitting...' }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // export default
+    export default class PageFormView {
+      
+      /**
+       * on before mount
+       */
+      onBeforeMount(...args) {
+
+        // submit
+        this.onSubmit = this.onSubmit.bind(this);
+      }
+
+      /**
+       * on data
+       */
+      onData(field, value) {
+        // check value
+        this.update();
+      }
+
+      /**
+       * on submit
+       *
+       * @param {Event} e
+       */
+      async onSubmit(e, data) {
+        // prevent
+        e.preventDefault();
+        e.stopPropagation();
+
+        // loading
+        this.loading('submit', true);
+
+        // submit form
+        if (!data) data = this.refs.form.data();
+
+        // submit form
+        const item = await eden.socket.call('dashup.action', 'page', 'form', 'form.submit', data);
+        
+        // loading
+        this.loading('submit', false);
+      }
+
+
+      // ////////////////////////////////////////////////////////////////////////////
+      //
+      // MISC METHODS
+      //
+      // ////////////////////////////////////////////////////////////////////////////
+
+      /**
+       * get props
+       */
+      getProps() {
+        // clone
+        const newProps = { ...(this.props) };
+
+        // delete
+        delete newProps.ref;
+        delete newProps.type;
+        delete newProps.view;
+        delete newProps.class;
+        delete newProps.struct;
+
+        // return
+        return newProps;
+      }
+
+      /**
+       * ref
+       */
+      ref(name) {
+        // set refs
+        if (!this.refs) this.refs = {};
+
+        // return ref function
+        return (that) => {
+          // set ref
+          this.refs[name] = that;
+        };
+      }
+
+      /**
+       * set loading
+       */
+      loading(type, way) {
+        // set loading
+        if (!this.__loading) this.__loading = new Map();
+
+        // check loading
+        if (!type) return !!Array.from(this.__loading.values()).find((v) => v);
+        if (typeof way === 'undefined') return !!this.__loading.get(type);
+
+        // set loading
+        this.__loading.set(type, way);
+        this.update();
+      }
+    }
+  </script>
+</page-form-view>

@@ -1,0 +1,170 @@
+<dashup-form>
+  <form onsubmit={ (e) => onSubmit(e) }>
+    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } { ...getProps() } />
+  </form>
+
+  <script>
+
+    // export default
+    export default class FormRender {
+
+      /**
+       * on before mount
+       */
+      onMounted(...args) {
+        // run ref
+        if (this.props.ref) this.props.ref(this);
+        
+      }
+
+      /**
+       * on before mount
+       */
+      onUpdated(...args) {
+        // run ref
+        if (this.props.ref) this.props.ref(this);
+        
+      }
+
+      /**
+       * get props
+       */
+      getProps() {
+        // clone
+        const newProps = { ...(this.props) };
+
+        // delete
+        delete newProps.ref;
+        delete newProps.type;
+        delete newProps.view;
+        delete newProps.class;
+        delete newProps.struct;
+
+        // set functions
+        newProps.onSet = (...args) => this.onSet(...args);
+        newProps.onInit = (...args) => this.onInit(...args);
+        newProps.onSave = (...args) => this.onSave(...args);
+        newProps.onData = (...args) => this.onData(...args);
+        newProps.onRemove = (...args) => this.onRemove(...args);
+
+        // return
+        return newProps;
+      }
+
+      /**
+       * on set
+       */
+      async onSet(field) {
+        // call update
+        let fields = (this.props.page.get('data.fields') || []);
+
+        // get saved field
+        const savedField = await eden.socket.call('dashup.action', 'page', 'form', 'field.save', field);
+
+        // replace
+        fields = fields.filter((f) => f.uuid !== savedField.uuid);
+
+        // push again
+        fields.push(savedField);
+        
+        // set fields
+        this.props.data('fields', fields);
+      }
+
+      /**
+       * on save fields
+       */
+      onSave(fields) {
+        // set fields
+        this.props.data('fields', fields);
+      }
+
+      /**
+       * no init required
+       */
+      onInit() {
+        return;
+      }
+
+      /**
+       * on remove field
+       */
+      onRemove(field) {
+        // call update
+        let fields = (this.props.page.get('data.fields') || []);
+
+        // replace
+        fields = fields.filter((f) => f.uuid !== savedField.uuid);
+        
+        // set fields
+        this.props.data('fields', fields);
+      }
+
+      /**
+       * on update
+       */
+      onData(field, value) {
+        // on data
+        if (this.props.onData) this.props.onData(field, value);
+      }
+
+      /**
+       * prevent form submit
+       */
+      onSubmit(e) {
+        // check data
+        if (this.props.onSubmit) this.props.onSubmit(e, this.data());
+      }
+
+      /**
+       * ref
+       */
+      ref(name) {
+        // set refs
+        if (!this.refs) this.refs = {};
+
+        // return ref function
+        return (that) => {
+          // set ref
+          this.refs[name] = that;
+        };
+      }
+
+      /**
+       * set loading
+       */
+      loading(type, way) {
+        // set loading
+        if (!this.__loading) this.__loading = new Map();
+
+        // check loading
+        if (!type) return !!Array.from(this.__loading.values()).find((v) => v);
+        if (typeof way === 'undefined') return !!this.__loading.get(type);
+
+        // set loading
+        this.__loading.set(type, way);
+        this.update();
+      }
+
+      /**
+       * returns JSON form data
+       */
+      data() {
+        // set data
+        const data = {};
+
+        // get data
+        const formData = new FormData(this.$('form'));
+
+        // data
+        formData.forEach((v, k) => {
+          // set to data
+          data[k] = v;
+        });
+        
+        // return data
+        return data;
+      }
+    }
+  </script>
+</dashup-form>
