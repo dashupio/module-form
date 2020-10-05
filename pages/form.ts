@@ -34,7 +34,7 @@ export default class FormPage extends Struct {
    */
   get icon() {
     // return page type label
-    return 'fa fa-comments';
+    return 'fa fa-ballot-check';
   }
 
   /**
@@ -112,9 +112,15 @@ export default class FormPage extends Struct {
    * @param param0 
    * @param field 
    */
-  async formSubmitAction({ socket, dashup }, body) {
+  formSubmitAction(opts, { model, page, form }, body) {
+    // check if id
     console.log(body);
-    // return field
-    return body;
+    
+    // deafen action
+    return this.dashup.connection.rpc(opts, 'model.update', {
+      page,
+      form,
+      model,
+    }, body);
   }
 }

@@ -59,7 +59,7 @@
         let fields = (this.props.page.get('data.fields') || []);
 
         // get saved field
-        const savedField = await eden.socket.call('dashup.action', 'page', 'form', 'field.save', field);
+        const savedField = await this.props.dashup.rpc({}, 'field.save', field);
 
         // replace
         fields = fields.filter((f) => f.uuid !== savedField.uuid);

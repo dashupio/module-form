@@ -8,7 +8,7 @@
     <div class="px-0 px-lg-3 container-lg">
       <div class="card">
         <div class="card-body">
-          <dashup-view ref={ ref('form') } view="form" type="page" preview={ !props.altering } on-data={ (data) => onData(data) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
+          <dashup-view ref={ ref('form') } view="form" type="page" struct="form" preview={ !props.altering } on-data={ (data) => onData(data) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
         </div>
 
         <div class="card-footer text-right pt-0 pb-3">
@@ -62,7 +62,11 @@
         if (!data) data = this.refs.form.data();
 
         // submit form
-        const item = await eden.socket.call('dashup.action', 'page', 'form', 'form.submit', data);
+        const item = await this.props.page.action('form.submit', {
+          page  : this.props.page.get('_id'),
+          form  : this.props.page.get('_id'),
+          model : this.props.page.get('data.model'),
+        }, data);
         
         // loading
         this.loading('submit', false);
