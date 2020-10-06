@@ -100,7 +100,9 @@ export default class FormPage extends Struct {
    * @param param0 
    * @param field 
    */
-  async fieldSaveAction({ socket, dashup }, field) {
+  async fieldSaveAction(opts, field) {
+    // deafen action
+    field = await this.dashup.connection.rpc(opts, 'field.save', field);
 
     // return field
     return field;

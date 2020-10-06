@@ -1,6 +1,6 @@
 <dashup-form>
   <form onsubmit={ (e) => onSubmit(e) }>
-    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.sanitise() } { ...getProps() } />
+    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.sanitise() } placement={ props.page ? props.page.get('_id') : 'null' } { ...getProps() } />
   </form>
 
   <script>
@@ -58,7 +58,10 @@
         let fields = (this.props.page.get('data.fields') || []);
 
         // get saved field
-        const savedField = await this.props.dashup.rpc({}, 'field.save', field);
+        const savedField = await this.props.dashup.action({
+          type   : 'page',
+          struct : 'form',
+        }, 'field.save', field);
 
         // replace
         fields = fields.filter((f) => f.uuid !== savedField.uuid);
