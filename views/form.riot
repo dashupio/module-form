@@ -1,6 +1,6 @@
 <dashup-form>
   <form onsubmit={ (e) => onSubmit(e) }>
-    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } { ...getProps() } />
+    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.sanitise() } { ...getProps() } />
   </form>
 
   <script>
@@ -14,7 +14,6 @@
       onMounted(...args) {
         // run ref
         if (this.props.ref) this.props.ref(this);
-        
       }
 
       /**
@@ -23,7 +22,6 @@
       onUpdated(...args) {
         // run ref
         if (this.props.ref) this.props.ref(this);
-        
       }
 
       /**
@@ -35,6 +33,7 @@
 
         // delete
         delete newProps.ref;
+        delete newProps.data;
         delete newProps.type;
         delete newProps.view;
         delete newProps.class;
@@ -113,7 +112,11 @@
        */
       onSubmit(e) {
         // check data
-        if (this.props.onSubmit) this.props.onSubmit(e, this.data());
+        if (this.props.onSubmit) this.props.onSubmit(e, {
+          _id : this.props.item ? this.props.item.get('_id') : null,
+
+          ...(this.data())
+        });
       }
 
       /**
@@ -151,7 +154,9 @@
        */
       data() {
         // set data
-        const data = {};
+        const data = {
+          _id : this.props.item ? this.props.item.get('_id') : null,
+        };
 
         // get data
         const formData = new FormData(this.$('form'));
