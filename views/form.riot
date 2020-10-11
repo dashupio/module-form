@@ -1,12 +1,12 @@
 <dashup-form>
   <form onsubmit={ (e) => onSubmit(e) }>
-    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.sanitise() } placement={ props.page ? props.page.get('_id') : 'null' } { ...getProps() } />
+    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.get() } placement={ props.page ? props.page.get('_id') : 'null' } { ...getProps() } />
   </form>
 
   <script>
 
     // export default
-    export default class FormRender {
+    export default class DashupForm {
 
       /**
        * on before mount
@@ -96,7 +96,7 @@
         let fields = (this.props.page.get('data.fields') || []);
 
         // replace
-        fields = fields.filter((f) => f.uuid !== savedField.uuid);
+        fields = fields.filter((f) => f.uuid !== field.uuid);
         
         // set fields
         this.props.data('fields', fields);

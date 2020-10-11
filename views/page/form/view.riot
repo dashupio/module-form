@@ -8,15 +8,15 @@
     <div class="px-0 px-lg-3 container-lg">
       <div class="card">
         <div class="card-body">
-          <dashup-view ref={ ref('form') } view="form" type="page" struct="form" preview={ !props.altering } on-data={ (data) => onData(data) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
+          <dashup-view ref={ ref('form') } view="form" type="page" struct="form" item={ props.current } preview={ !props.altering } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
         </div>
 
         <div class="card-footer text-right pt-0 pb-3">
           <button if={ !loading('submit') } class="btn btn-success" onclick={ (e) => onSubmit(e) }>
-            { props.item ? 'Update' : 'Submit' }
+            { props.current ? 'Update' : 'Submit' }
           </button>
           <button if={ loading('submit') } class="btn btn-success disabled">
-            { props.item ? 'Updating...' : 'Submitting...' }
+            { props.current ? 'Updating...' : 'Submitting...' }
           </button>
         </div>
       </div>
@@ -41,8 +41,14 @@
        * on data
        */
       onData(field, value) {
-        // check value
-        this.update();
+        // set to item
+        if (this.props.current) {
+          // set value
+          this.props.current.set(field.name || field.uuid, value);
+
+          // update
+          this.update();
+        }
       }
 
       /**
@@ -89,6 +95,7 @@
         // delete
         delete newProps.ref;
         delete newProps.type;
+        delete newProps.item;
         delete newProps.view;
         delete newProps.class;
         delete newProps.struct;
