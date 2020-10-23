@@ -68,11 +68,13 @@
         if (!data) data = this.refs.form.data();
 
         // submit form
-        const item = await this.props.page.action('form.submit', {
-          page  : this.props.page.get('_id'),
-          form  : this.props.page.get('_id'),
-          model : this.props.page.get('data.model'),
-        }, data);
+        const item = await this.props.dashup.action({
+          type   : 'page',
+          page   : this.props.page.get('_id'),
+          form   : this.props.page.get('_id'),
+          model  : this.props.page.get('data.model'),
+          struct : 'form',
+        }, 'form.submit', data);
         
         // loading
         this.loading('submit', false);

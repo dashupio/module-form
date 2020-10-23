@@ -114,18 +114,16 @@ export default class FormPage extends Struct {
    * @param param0 
    * @param field 
    */
-  formSubmitAction(opts, { model, page, form }, body) {
+  formSubmitAction(opts, body) {
     // args
-    const args = [{
-      page,
-      form,
-      model,
-    }, body];
+    const args = [body];
 
     // unshift to args
     if (body._id) args.unshift(body._id);
     
     // deafen action
-    return this.dashup.connection.rpc(opts, 'model.update', ...args);
+    return this.dashup.connection.rpc({
+      ...opts,
+    }, 'model.update', ...args);
   }
 }

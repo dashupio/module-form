@@ -4,6 +4,8 @@
   </form>
 
   <script>
+    // to object
+    import toObject from 'form-data-to-object';
 
     // export default
     export default class DashupForm {
@@ -63,11 +65,20 @@
           struct : 'form',
         }, 'field.save', field);
 
-        // replace
-        fields = fields.filter((f) => f.uuid !== savedField.uuid);
+        // found
+        const found = fields.find((f) => f.uuid === savedField.uuid);
 
-        // push again
-        fields.push(savedField);
+        // set value
+        if (found) {
+          // set values
+          Object.keys(savedField).forEach((key) => {
+            // set value
+            found[key] = savedField[key];
+          });
+        } else {
+          // push again
+          fields.push(savedField);
+        }
         
         // set fields
         this.props.data('fields', fields);
@@ -106,6 +117,9 @@
        * on update
        */
       onData(field, value) {
+        // set value
+        if (this.props.item) this.props.item.set(field.name || field.uuid, value);
+
         // on data
         if (this.props.onData) this.props.onData(field, value);
       }
@@ -171,7 +185,7 @@
         });
         
         // return data
-        return data;
+        return toObject.toObj(data);
       }
     }
   </script>
