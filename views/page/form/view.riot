@@ -5,10 +5,23 @@
       Please select a <b>model</b> for the form.
     </a>
 
-    <div class="px-0 px-lg-3 container-lg">
+    <div class="px-0 px-lg-3 container-lg" if={ props.route === 'remove' }>
+      <div class="card">
+        <div class="card-body lead">
+          Are you sure you want to remove this item?
+        </div>
+
+        <div class="card-footer text-right pt-0 pb-3">
+          <button class="btn btn-danger" onclick={ (e) => onRemove(e) }>
+            { loading('remove') ? 'Update' : 'Submit' }
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="px-0 px-lg-3 container-lg" if={ !props.route || props.route === 'create' }>
       <div class="card">
         <div class="card-body">
-          <dashup-view ref={ ref('form') } view="form" type="page" struct="form" item={ props.current } preview={ !props.altering } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
+          <dashup-view ref={ ref('form') } view="form" type="page" struct="form" item={ current } preview={ !props.altering } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
         </div>
 
         <div class="card-footer text-right pt-0 pb-3">
@@ -24,7 +37,6 @@
   </div>
 
   <script>
-
     // export default
     export default class PageFormView {
       
@@ -32,23 +44,66 @@
        * on before mount
        */
       onBeforeMount(...args) {
-
         // submit
         this.onSubmit = this.onSubmit.bind(this);
+
+        // set current
+        this.current = this.props.current || new this.props.dashup.Model();
+      }
+      
+      /**
+       * on before mount
+       */
+      onBeforeUpdate(props) {
+        // submit
+        this.onSubmit = this.onSubmit.bind(this);
+
+        // set current
+        if (props.current && props.current.get('_id') !== this.current.get('_id')) {
+          // current
+          this.current = props.current;
+        }
       }
 
       /**
        * on data
        */
       onData(field, value) {
-        // set to item
-        if (this.props.current) {
-          // set value
-          this.props.current.set(field.name || field.uuid, value);
+        // set value
+        this.current.set(field.name || field.uuid, value);
 
-          // update
-          this.update();
+        // update
+        this.update();
+      }
+
+      /**
+       * on remove
+       */
+      async onRemove(e) {
+        // prevent
+        e.preventDefault();
+        e.stopPropagation();
+
+        // loading
+        this.loading('submit', true);
+        
+        // await
+        await this.props.current.remove();
+        
+        // loading
+        this.loading('submit', false);
+
+        // go
+        let redirect = `/app/${this.props.page.get('_id')}`;
+
+        // check redirect
+        if (`${window.location.search}`.includes('?redirect=')) {
+          // set redirect
+          redirect = window.location.search.split('redirect=')[1].split('?')[0];
         }
+
+        // go
+        eden.router.go(redirect);
       }
 
       /**
