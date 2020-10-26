@@ -59,9 +59,9 @@
         this.onSubmit = this.onSubmit.bind(this);
 
         // set current
-        if (props.current && props.current.get('_id') !== this.current.get('_id')) {
+        if ((!props.current && this.current) || (props.current && props.current.get('_id') !== this.current.get('_id'))) {
           // current
-          this.current = props.current;
+          this.current = props.current || new this.props.dashup.Model();
         }
       }
 
