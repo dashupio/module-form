@@ -16,6 +16,9 @@
       onMounted(...args) {
         // run ref
         if (this.props.ref) this.props.ref(this);
+
+        // on data
+        this.onData = this.onData.bind(this);
       }
 
       /**
