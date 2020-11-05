@@ -83,7 +83,7 @@ export default class FormPage extends Struct {
    */
   get categories() {
     // return array of categories
-    return ['frontend'];
+    return ['Form'];
   }
 
   /**
