@@ -15,7 +15,7 @@
     "@babel/preset-env": "^7.11.5",
     "@dashup/core": "^1.0.1",
     "@dashup/eslint-config-dashup": "0.0.1",
-    "@dashup/module": "^1.0.2",
+    "@dashup/module": "^1.0.3",
     "babel-plugin-add-module-exports": "^1.0.4",
     "form-data-to-object": "^0.2.0",
     "uuid": "^8.3.0"
