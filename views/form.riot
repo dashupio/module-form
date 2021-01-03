@@ -1,6 +1,6 @@
 <dashup-form>
   <form onsubmit={ (e) => onSubmit(e) }>
-    <eden-fields ref={ ref('fields') } children={ props.page.get('data.fields')  || [] } data={ props.item && props.item.get() } placement={ props.page ? props.page.get('_id') : 'null' } { ...getProps() } />
+    <eden-fields ref={ ref('fields') } children={ props.children || props.page.get('data.fields') || [] } data={ props.item && props.item.get() } placement={ props.page ? props.page.get('_id') : 'null' } { ...getProps() } />
   </form>
 
   <script>

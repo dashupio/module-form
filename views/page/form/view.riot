@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-footer text-right pt-0 pb-3">
-          <button if={ !loading('submit') } class="btn btn-success" onclick={ (e) => onSubmit(e) }>
+          <button if={ !loading('submit') } class={ `btn btn-success${state.updated ? '' : ' disabled'}` } onclick={ (e) => onSubmit(e) }>
             { props.current ? 'Update' : 'Submit' }
           </button>
           <button if={ loading('submit') } class="btn btn-success disabled">
@@ -73,7 +73,9 @@
         this.current.set(field.name || field.uuid, value);
 
         // update
-        this.update();
+        this.update({
+          updated : true,
+        });
       }
 
       /**
@@ -118,6 +120,9 @@
 
         // loading
         this.loading('submit', true);
+        this.update({
+          updated : false,
+        });
 
         // submit form
         if (!data) data = this.refs.form.data();
