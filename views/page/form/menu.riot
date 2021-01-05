@@ -1,13 +1,25 @@
 <page-form-menu>
-  <a if={ props.item && props.item._id } class={ `ml-2 btn btn-outline-danger` }>
-    <i class="fa fa-trash" />
-  </a>
-  <a if={ props.item && props.item._id } class={ `ml-2 btn btn-outline-success` }>
-    <i class="fa fa-plus mr-2" /> Add New
-  </a>
-  <button if={ props.dashup.can(props.page, 'manage') } class={ `ml-2 btn btn-${!props.altering ? 'outline-' : ''}primary` } onclick={ (e) => onPreview(e) }>
-    <i class={ `fa fa-${!props.altering ? 'pencil' : 'check'} mr-2` } /> { !props.altering ? 'Alter Form' : 'Finish Altering' }
+  <!-- ALTER -->
+  <button if={ props.dashup.can(props.page, 'manage') } class={ `mr-2 btn btn-${!props.altering ? 'link text-dark' : 'primary'}` } onclick={ (e) => onPreview(e) }>
+    <i class={ `fat fa-${!props.altering ? 'pencil' : 'check'} mr-2` } />
+    { !props.altering ? 'Alter Form' : 'Finish Altering' }
   </button>
+  <!-- / ALTER -->
+
+  <!-- CREATE -->
+  <template if={ props.item && props.item._id && props.page.get('data.model') && props.dashup.page(props.page.get('data.model')) }>
+    <a class="mr-2 btn btn-dark">
+      <i class="fat fa-plus mr-2" />
+      { props.dashup.page(props.page.get('data.model')).get('name') }
+    </a>
+  </template>
+  <!-- / CREATE -->
+
+  <!-- REMOVE -->
+  <a if={ props.item && props.item._id } class={ `mr-2 btn btn-danger` }>
+    <i class="fat fa-trash" />
+  </a>
+  <!-- / REMOVE -->
 
   <script>
   
