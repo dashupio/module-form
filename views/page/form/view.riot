@@ -127,6 +127,11 @@
         // submit form
         if (!data) data = this.refs.form.data();
 
+        // create
+        const create = !data._id;
+
+        console.log('CREATE', create);
+
         // submit form
         const item = await this.props.dashup.action({
           type   : 'page',
@@ -135,9 +140,18 @@
           model  : this.props.page.get('data.model'),
           struct : 'form',
         }, 'form.submit', data);
+
+        // success
+        eden.alert.success(`Successfully ${create ? 'created' : 'updatedd'} ${this.props.page.get('name')}`)
         
         // loading
         this.loading('submit', false);
+
+        // go to submit again
+        if (create) {
+          // submit id
+          eden.router.go(`/app/${this.props.page.get('_id')}`);
+        }
       }
 
 
