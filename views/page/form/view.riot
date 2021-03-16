@@ -130,8 +130,6 @@
         // create
         const create = !data._id;
 
-        console.log('CREATE', create);
-
         // submit form
         const item = await this.props.dashup.action({
           type   : 'page',
@@ -142,7 +140,7 @@
         }, 'form.submit', data);
 
         // success
-        eden.alert.success(`Successfully ${create ? 'created' : 'updatedd'} ${this.props.page.get('name')}`)
+        eden.alert.success(`Successfully ${create ? 'created' : 'updated'} ${this.props.page.get('name')}`)
         
         // loading
         this.loading('submit', false);
