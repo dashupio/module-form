@@ -20,11 +20,16 @@
     </div>
     <div class="px-0 px-lg-3 container-lg" if={ !props.route || props.route === 'create' }>
       <div class="card">
-        <div class="card-body">
+        <div class="card-body text-center" if={ state.success }>
+          <h1 class="my-5">
+            Successfully submitted { props.page.get('name') }.
+          </h1>
+        </div>
+        <div class="card-body" if={ !state.success }>
           <dashup-view ref={ ref('form') } view="form" type="page" struct="form" item={ current } preview={ !props.altering } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
         </div>
 
-        <div class="card-footer text-right pt-0 pb-3">
+        <div class="card-footer text-right pt-0 pb-3" if={ !state.success }>
           <button if={ !loading('submit') } class={ `btn btn-success${state.updated ? '' : ' disabled'}` } onclick={ (e) => onSubmit(e) }>
             { props.current ? 'Update' : 'Submit' }
           </button>
@@ -144,6 +149,14 @@
         
         // loading
         this.loading('submit', false);
+
+        // check state
+        if (create && eden.get('state.layout') === 'share') {
+          // update success
+          return this.update({
+            success : true,
+          });
+        }
 
         // go to submit again
         if (create) {
