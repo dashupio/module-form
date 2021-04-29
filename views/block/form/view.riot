@@ -4,8 +4,11 @@
       <b>{ props.block.name }</b>
     </div>
     <div class={ `dashup-grid oy-scroll${props.block.background ? ' flex-1' : ' card-body w-100'}` }>
-      <div class="w-100 h-100">
-        <dashup-view if={ !loading('form') && getSelectedForms().length } ref={ ref('form') } view="form" type="page" struct="form" item={ current } page={ getForm() } preview={ true } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
+      <div if={ state.refreshing || !current } class="w-100 h-100 d-flex align-items-center">
+        <i class="fa fa-spinner fa-spin h1 m-auto" />
+      </div>
+      <div if={ !state.refreshing && current } class="w-100 h-100">
+        <dashup-view if={ getSelectedForms().length } ref={ ref('form') } view="form" type="page" struct="form" item={ current } page={ getForm() } preview={ true } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
       </div>
     </div>
     <div if={ getSelectedForms().length } class={ `d-flex justify-content-end${props.block.background ? ' mt-2' : ' card-footer'}` }>
@@ -34,7 +37,6 @@
 
         // set current
         this.current = this.props.item || new this.props.dashup.Model();
-        
       }
 
       /**
@@ -59,18 +61,40 @@
       onUpdated() {
         // check frontend
         if (typeof window === 'undefined') return;
+
+        // safe
+        const safeUpdate = () => {
+          // update
+          this.update({
+            refreshing : new Date(),
+          });
+
+          // timeout
+          setTimeout(() => {
+            // update
+            this.update({
+              refreshing : null,
+            });
+          }, 1000);
+        }
         
         // check current
         if (this.props.item && this.current.get('_id') !== this.props.item.get('_id')) {
           // set item
           this.current = this.props.item;
-          this.loading('form', true);
-          this.loading('form', false);
+          safeUpdate();
         } else if (!this.props.item && this.current.get('_id')) {
           // set current
           this.current = this.props.item || new this.props.dashup.Model();
-          this.loading('form', true);
-          this.loading('form', false);
+          safeUpdate();
+        }
+        
+        // fix column sizing
+        if (this.$('.oy-scroll') && !this.$('.oy-scroll.ps')) {
+          // ps
+          this.ps = new PerfectScrollbar(this.$('.oy-scroll'), {
+            suppressScrollX : true,
+          });
         }
       }
 
