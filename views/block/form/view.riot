@@ -4,10 +4,10 @@
       <b>{ props.block.name }</b>
     </div>
     <div class={ `dashup-grid oy-scroll${props.block.background ? ' flex-1' : ' card-body w-100'}` }>
-      <div if={ state.refreshing || !current } class="w-100 h-100 d-flex align-items-center">
+      <div if={ loading('form') || !current } class="w-100 h-100 d-flex align-items-center">
         <i class="fa fa-spinner fa-spin h1 m-auto" />
       </div>
-      <div if={ !state.refreshing && current } class="w-100 h-100">
+      <div if={ !loading('form') && current } class="w-100 h-100">
         <dashup-view if={ getSelectedForms().length } ref={ ref('form') } view="form" type="page" struct="form" item={ current } page={ getForm() } preview={ true } on-data={ (k, v) => onData(k, v) } on-submit={ (e, d) => onSubmit(e, d) } { ...getProps() } />
       </div>
     </div>
@@ -23,6 +23,7 @@
 
   <script>
     // import scrollbar
+    import { v4 as uuid } from 'uuid';
     import PerfectScrollbar from 'perfect-scrollbar';
 
     // export default
@@ -56,6 +57,23 @@
       }
 
       /**
+       * on before update
+       */
+      onBeforeUpdate() {
+        // check frontend
+        if (typeof window === 'undefined') return;
+        
+        // check current
+        if (this.props.item && this.current.get('_id') !== this.props.item.get('_id')) {
+          // set item
+          this.__loading.set('form', true);
+        } else if ((!this.props.item || !this.props.item.get('_id')) && this.current.get('_id')) {
+          // set item
+          this.__loading.set('form', true);
+        }
+      }
+
+      /**
        * on mounted
        */
       onUpdated() {
@@ -65,16 +83,12 @@
         // safe
         const safeUpdate = () => {
           // update
-          this.update({
-            refreshing : new Date(),
-          });
+          this.loading('form', true);
 
           // timeout
           setTimeout(() => {
             // update
-            this.update({
-              refreshing : null,
-            });
+            this.loading('form', false);
           }, 1000);
         }
         
@@ -82,11 +96,11 @@
         if (this.props.item && this.current.get('_id') !== this.props.item.get('_id')) {
           // set item
           this.current = this.props.item;
-          safeUpdate();
-        } else if (!this.props.item && this.current.get('_id')) {
+          return safeUpdate();
+        } else if ((!this.props.item || !this.props.item.get('_id')) && this.current.get('_id')) {
           // set current
           this.current = this.props.item || new this.props.dashup.Model();
-          safeUpdate();
+          return safeUpdate();
         }
         
         // fix column sizing
