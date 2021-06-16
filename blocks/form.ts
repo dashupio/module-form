@@ -45,7 +45,7 @@ export default class FormBlock extends Struct {
   get views() {
     // return object of views
     return {
-      view   : 'block/form/view',
+      view   : 'block/form',
       config : 'block/form/config',
     };
   }

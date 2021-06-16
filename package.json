@@ -15,10 +15,21 @@
     "@babel/preset-env": "^7.11.5",
     "@dashup/core": "^1.0.1",
     "@dashup/eslint-config-dashup": "0.0.1",
-    "@dashup/module": "^1.0.6",
+    "@dashup/module": "^2.0.2",
+    "@dashup/ui": "0.0.1",
     "babel-plugin-add-module-exports": "^1.0.4",
     "form-data-to-object": "^0.2.0",
+    "libphonenumber-js": "^1.9.19",
     "perfect-scrollbar": "^1.5.0",
+    "react-bootstrap-intl-tel-input": "^1.0.1",
+    "react-datepicker": "^4.1.1",
+    "react-datetime-picker": "^3.3.0",
+    "react-dropzone": "^11.3.2",
+    "react-phone-input-2": "^2.14.0",
+    "sassify": "^4.0.1",
     "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.13.13"
   }
 }
