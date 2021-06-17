@@ -26,15 +26,9 @@ export default class DateField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/date/view',
-      input : 'field/date',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
+      view   : 'field/date/view',
+      input  : 'field/date',
+      config : 'field/date/config',
     };
   }
   /**
@@ -97,6 +91,7 @@ export default class DateField extends Struct {
    * @param {*} value 
    */
   async submitAction(opts, field, value) {
+    console.log(field, value);
     // check value
     if (typeof value === 'string') value = {
       start : new Date(value),
@@ -105,9 +100,23 @@ export default class DateField extends Struct {
     // check value
     if (typeof value !== 'object') value = {};
 
+    // check duration
+    if (field.duration && value.end) {
+      value.end = new Date(value.end);
+    } else {
+      value.end = null;
+    }
+
+    if (field.repeat && value.repeat) {
+      // check until
+      if (value.repeat.until) value.repeat.until = new Date(value.repeat.until);
+    }
+
     // check start/end
-    if (value.end)   value.end = new Date(value.end);
     if (value.start) value.start = new Date(value.start);
+
+    // duration
+    if (value.start && value.end) value.duration = value.end.getTime() - value.start.getTime();
 
     // return value map
     return {

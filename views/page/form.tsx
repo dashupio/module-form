@@ -17,6 +17,12 @@ const FormPage = (props = {}) => {
   const [actualData, setActualData] = useState((props.item && props.item.get()) || {});
   const [submitting, setSubmitting] = useState(false);
 
+  // required
+  const required = [{
+    key   : 'data.model',
+    label : 'Model',
+  }];
+
   // use effect
   useEffect(() => {
     // set loading
@@ -87,7 +93,6 @@ const FormPage = (props = {}) => {
 
     // loading
     setRemoving(true);
-    console.log(props.item);
     
     // await
     await props.item.remove();
@@ -110,7 +115,7 @@ const FormPage = (props = {}) => {
 
   // return jsx
   return (
-    <Page { ...props } loading={ loading } bodyClass="flex-column">
+    <Page { ...props } loading={ loading } require={ required } bodyClass="flex-column">
 
       <Page.Config show={ config } onHide={ (e) => setConfig(false) } />
 
@@ -161,6 +166,9 @@ const FormPage = (props = {}) => {
                       setData={ setData }
                       updating={ props.dashup.can(props.page, 'manage') && updating }
                       onSubmit={ (e) => onSubmit(e) }
+                      getForms={ props.getForms }
+                      getField={ props.getField }
+                      getFields={ props.getFields }
                       setFields={ setFields }
                       available={ props.available.fields }
                       setPrevent={ setPrevent }

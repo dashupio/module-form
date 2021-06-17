@@ -25,6 +25,7 @@
     "react-datepicker": "^4.1.1",
     "react-datetime-picker": "^3.3.0",
     "react-dropzone": "^11.3.2",
+    "react-input-mask": "^2.0.4",
     "react-phone-input-2": "^2.14.0",
     "sassify": "^4.0.1",
     "uuid": "^8.3.0"

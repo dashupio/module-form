@@ -12,6 +12,7 @@ const UserField = require('./fields/user');
 const EmailField = require('./fields/email');
 const ImageField = require('./fields/image');
 const PhoneField = require('./fields/phone');
+const MoneyField = require('./fields/money');
 const NumberField = require('./fields/number');
 const SelectField = require('./fields/select');
 const TextareaField = require('./fields/textarea');
@@ -41,6 +42,7 @@ class FormModule extends Module {
     fn('field', EmailField);
     fn('field', ImageField);
     fn('field', PhoneField);
+    fn('field', MoneyField);
     fn('field', NumberField);
     fn('field', SelectField);
     fn('field', TextareaField);
