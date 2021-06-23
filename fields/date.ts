@@ -56,6 +56,30 @@ export default class DateField extends Struct {
     // return field type label
     return {
       tabs : ['Config', 'Display'],
+      subs : [
+        {
+          key       : 'start',
+          type      : 'date',
+          label     : 'Starts',
+          default   : true,
+          dateOnly  : true,
+          operators : ['$eq', '$ne', '$gt', '$lt', '$gte', '$lte', '$exists'],
+        },
+        {
+          key       : 'end',
+          type      : 'date',
+          label     : 'Ends',
+          dateOnly  : true,
+          operators : ['$eq', '$ne', '$gt', '$lt', '$gte', '$lte', '$exists'],
+        },
+        {
+          key       : 'repeat',
+          type      : 'boolean',
+          label     : 'Repeats',
+          operators : ['$exists'],
+        },
+      ],
+      multiple : false,
     };
   }
 
@@ -91,7 +115,6 @@ export default class DateField extends Struct {
    * @param {*} value 
    */
   async submitAction(opts, field, value) {
-    console.log(field, value);
     // check value
     if (typeof value === 'string') value = {
       start : new Date(value),

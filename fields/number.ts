@@ -25,13 +25,6 @@ export default class NumberField extends Struct {
     return {
       view  : 'field/number/view',
       input : 'field/number',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
     };
   }
   /**
@@ -58,7 +51,9 @@ export default class NumberField extends Struct {
   get data() {
     // return field type label
     return {
-      tabs : ['Config', 'Display'],
+      tabs      : ['Config', 'Display'],
+      multiple  : false,
+      operators : ['$gt', '$lt', '$gte', '$lte', '$eq', '$ne', '$exists'],
     };
   }
 

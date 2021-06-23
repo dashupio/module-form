@@ -32,13 +32,6 @@ export default class FileField extends Struct {
     return {
       view  : 'field/file/view',
       input : 'field/file',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
     };
   }
   /**
@@ -66,7 +59,9 @@ export default class FileField extends Struct {
   get data() {
     // return field type label
     return {
-      tabs : ['Config', 'Display'],
+      tabs      : ['Config', 'Display'],
+      multiple  : true,
+      operators : ['$exists'],
     };
   }
 

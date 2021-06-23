@@ -32,13 +32,6 @@ export default class UserField extends Struct {
     return {
       view  : 'field/user/view',
       input : 'field/user',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
     };
   }
   /**
@@ -66,7 +59,9 @@ export default class UserField extends Struct {
   get data() {
     // return field type label
     return {
-      tabs : ['Config', 'Display'],
+      tabs      : ['Config', 'Display'],
+      multiple  : true,
+      operators : ['$eq', '$ne', '$in', '$nin', '$exists'],
     };
   }
 

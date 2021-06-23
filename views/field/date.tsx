@@ -1,10 +1,9 @@
 
 // import dependencies
 import moment from 'moment';
-import Select from 'react-select';
 import InputMask from 'react-input-mask';
 import React, { useRef, useState, useEffect } from 'react';
-import { Date as DatePicker } from '@dashup/ui';
+import { Date as DatePicker, Select } from '@dashup/ui';
 import { Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from 'react-bootstrap';
 
 // import date
@@ -144,14 +143,16 @@ const FieldDate = (props = {}) => {
 
   // return text field
   return (
-    <Form.Group className="mb-3" controlId={ props.field.uuid }>
-      <Form.Label>
-        { props.field.label || (
-          <a href="#!" onClick={ (e) => !props.onConfig(props.field) && !e.preventDefault() && e.stopPropagation() }>
-            <i>Set Label</i>
-          </a>
-        ) }
-      </Form.Label>
+    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
+      { !props.noLabel && (
+        <Form.Label>
+          { props.field.label || (
+            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && !e.preventDefault() && e.stopPropagation() }>
+              <i>Set Label</i>
+            </a>
+          ) }
+        </Form.Label>
+      ) }
 
       <div className="d-flex flex-row">
         <InputGroup className="flex-2" ref={ startRef }>
@@ -340,7 +341,7 @@ const FieldDate = (props = {}) => {
         </Popover>
       </Overlay>
 
-      { !!props.field.help && (
+      { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }
         </Form.Text>

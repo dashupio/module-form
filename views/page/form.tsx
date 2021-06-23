@@ -79,8 +79,6 @@ const FormPage = (props = {}) => {
       ...actualData,
     });
 
-    console.log(result);
-
     // submitting
     setSubmitting(false);
   };
@@ -127,7 +125,6 @@ const FormPage = (props = {}) => {
           </button>
         ) }
       </Page.Menu>
-      SUB MENU
       { props.route === 'remove' ? (
         <Page.Body>
           <div className="px-0 px-lg-3 container-lg">

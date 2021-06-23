@@ -15,6 +15,7 @@ const PhoneField = require('./fields/phone');
 const MoneyField = require('./fields/money');
 const NumberField = require('./fields/number');
 const SelectField = require('./fields/select');
+const BooleanField = require('./fields/boolean');
 const TextareaField = require('./fields/textarea');
 
 /**
@@ -45,6 +46,7 @@ class FormModule extends Module {
     fn('field', MoneyField);
     fn('field', NumberField);
     fn('field', SelectField);
+    fn('field', BooleanField);
     fn('field', TextareaField);
   }
 }

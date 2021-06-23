@@ -31,33 +31,38 @@ const FieldPhone = (props = {}) => {
     if (shouldReturn) return rtn;
   
     // check value
-    props.onChange(props.field, rtn);
+    props.onChange(props.field, props.field.numberOnly ? rtn.number : rtn);
   };
 
+  // let
+  let value = props.value;
+
   // check value
-  if (typeof props.value === 'string') props.value = onChange(props.value, true);
+  if (typeof value === 'string') value = onChange(value, true);
 
   // return text field
   return (
-    <Form.Group className="mb-3" controlId={ props.field.uuid }>
-      <Form.Label>
-        { props.field.label || (
-          <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
-            <i>Set Label</i>
-          </a>
-        ) }  
-      </Form.Label>
+    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
+      { !props.noLabel && (
+        <Form.Label>
+          { props.field.label || (
+            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
+              <i>Set Label</i>
+            </a>
+          ) }  
+        </Form.Label>
+      ) }
       <ReactPhoneInput
-        value={ props.value?.number }
+        value={ value?.number }
         inputExtraProps={{
           name      : 'phone',
           required  : props.field.required,
           autoFocus : true
         }}
         onChange={ (val) => onChange(`+${val}`) }
-        defaultCountry={ props.value?.country || props.field.country || 'us' }
+        defaultCountry={ value?.country || props.field.country || 'us' }
       />
-      { !!props.field.help && (
+      { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }
         </Form.Text>

@@ -1,11 +1,11 @@
 
 // import field interface
-import { Struct, Query } from '@dashup/module';
+import { Struct } from '@dashup/module';
 
 /**
- * build Money helper
+ * build address helper
  */
-export default class MoneyField extends Struct {
+export default class BooleanField extends Struct {
 
   /**
    * construct model field
@@ -15,6 +15,9 @@ export default class MoneyField extends Struct {
   constructor(...args) {
     // run super
     super(...args);
+
+    // submit
+    this.submitAction = this.submitAction.bind(this);
   }
 
   /**
@@ -23,8 +26,8 @@ export default class MoneyField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/money/view',
-      input : 'field/money',
+      view  : 'field/boolean/view',
+      input : 'field/boolean',
     };
   }
   /**
@@ -33,7 +36,7 @@ export default class MoneyField extends Struct {
   get actions() {
     // return object of views
     return {
-      
+      submit : this.submitAction,
     };
   }
 
@@ -42,7 +45,7 @@ export default class MoneyField extends Struct {
    */
   get type() {
     // return field type label
-    return 'money';
+    return 'boolean';
   }
 
   /**
@@ -53,7 +56,7 @@ export default class MoneyField extends Struct {
     return {
       tabs      : ['Config', 'Display'],
       multiple  : false,
-      operators : ['$gt', '$lt', '$gte', '$lte', '$eq', '$ne', '$exists'],
+      operators : ['$eq', '$ne', '$exists'],
     };
   }
 
@@ -62,7 +65,7 @@ export default class MoneyField extends Struct {
    */
   get title() {
     // return field type label
-    return 'Money';
+    return 'Boolean';
   }
 
   /**
@@ -78,6 +81,23 @@ export default class MoneyField extends Struct {
    */
   get description() {
     // return description string
-    return 'Money Field';
+    return 'Boolean Field';
+  }
+
+  /**
+   * submit field value
+   *
+   * @param {*} param0 
+   * @param {*} field 
+   * @param {*} value 
+   */
+  async submitAction(opts, field, value) {
+    // check value
+    value = value === 'true' || value === true;
+
+    // value
+    return {
+      value,
+    };
   }
 }

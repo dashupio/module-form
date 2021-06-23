@@ -118,14 +118,16 @@ const FieldFile = (props = {}) => {
 
   // return text field
   return (
-    <Form.Group className="mb-3" controlId={ props.field.uuid }>
-      <Form.Label>
-        { props.field.label || (
-          <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
-            <i>Set Label</i>
-          </a>
-        ) }  
-      </Form.Label>
+    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
+      { !props.noLabel && (
+        <Form.Label>
+          { props.field.label || (
+            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
+              <i>Set Label</i>
+            </a>
+          ) }  
+        </Form.Label>
+      ) }
       
       { props.field.input === 'input' ? (
         <>
@@ -213,7 +215,7 @@ const FieldFile = (props = {}) => {
       ) }
       
 
-      { !!props.field.help && (
+      { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }
         </Form.Text>

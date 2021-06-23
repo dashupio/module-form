@@ -2,9 +2,10 @@
 // import dependencies
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { Select } from '@dashup/ui';
 
 // text field
-const FieldEmail = (props = {}) => {
+const FieldBoolean = (props = {}) => {
 
   // return text field
   return (
@@ -18,11 +19,21 @@ const FieldEmail = (props = {}) => {
           ) }  
         </Form.Label>
       ) }
-      <Form.Control
-        type="email"
-        onChange={ (e) => props.onChange(props.field, e.target.value) }
+      <Select
+        isClearable
+        
+        options={ ['True', 'False'].map((key) => {
+          return {
+            label : key,
+            value : key.toLowerCase(),
+          }
+        }) }
+        onChange={ (val) => props.onChange(props.field, val?.value === 'true') }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
+        defaultValue={ {
+          label : props.value ? 'True' : 'False',
+          value : props.value ? 'true' : 'false',
+        } }
         />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
@@ -34,4 +45,4 @@ const FieldEmail = (props = {}) => {
 };
 
 // export default
-export default FieldEmail;
+export default FieldBoolean;

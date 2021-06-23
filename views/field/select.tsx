@@ -1,8 +1,8 @@
 
 // import dependencies
 import React from 'react';
-import Select from 'react-select';
 import { Form } from 'react-bootstrap';
+import { Select } from '@dashup/ui';
 
 // text field
 const FieldSelect = (props = {}) => {
@@ -45,27 +45,29 @@ const FieldSelect = (props = {}) => {
 
   // return text field
   return (
-    <Form.Group className="mb-3" controlId={ props.field.uuid }>
-      <Form.Label>
-        { props.field.label || (
-          <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
-            <i>Set Label</i>
-          </a>
-        ) }  
-      </Form.Label>
+    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
+      { !props.noLabel && (
+        <Form.Label>
+          { props.field.label || (
+            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
+              <i>Set Label</i>
+            </a>
+          ) }  
+        </Form.Label>
+      ) }
       <Select
         isClearable
         
         options={ props.field.options }
         isMulti={ props.field.multiple }
-        onChange={ (val) => props.onChange(props.field, val) }
+        onChange={ (val) => props.onChange(props.field, Array.isArray(val) ? val.map((v) => v.value) : val?.value) }
         components={ {
           Option,
         } }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ getValue() }
         />
-      { !!props.field.help && (
+      { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }
         </Form.Text>

@@ -23,15 +23,9 @@ export default class SelectField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/select/view',
-      input : 'field/select',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
+      view   : 'field/select/view',
+      input  : 'field/select',
+      config : 'field/select/config',
     };
   }
   /**
@@ -58,7 +52,9 @@ export default class SelectField extends Struct {
   get data() {
     // return field type label
     return {
-      tabs : ['Config', 'Display'],
+      tabs      : ['Config', 'Display'],
+      multiple  : true,
+      operators : ['$eq', '$ne', '$in', '$nin', '$inc', '$ninc', '$exists'],
     };
   }
 

@@ -1,7 +1,7 @@
 
 // import react
 import React from 'react';
-import Select from 'react-select';
+import { Select } from '@dashup/ui';
 
 // create page model config
 const PageFormConfig = (props = {}) => {

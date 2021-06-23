@@ -31,16 +31,8 @@ const FieldDateView = (props = {}) => {
       <span>
         { moment(start).format(getFormat()) }
       </span>
-      { type === 'date' && end && (
-        <span className="ms-2">
-          until { moment(end).format(getFormat()) }
-        </span>
-      ) }
-      { type === 'lasting' && end && (
-        <span className="ms-2">
-          for { amount.toLocaleString() } { period }{ amount > 1 ? 's' : ''}
-        </span>
-      ) }
+      { type === 'date' && !!end && ` until ${moment(end).format(getFormat())}` }
+      { type === 'lasting' && !!end && ` for ${amount.toLocaleString()} ${period}${amount > 1 ? 's' : ''}`}
       { repeat && (
         <>
           <i className="fa fa-repeat mx-2" />

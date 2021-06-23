@@ -63,6 +63,41 @@ export default class PhoneField extends Struct {
     // return field type label
     return {
       tabs : ['Config', 'Display'],
+      subs : [
+        {
+          key        : 'number',
+          type       : 'phone',
+          label      : 'Number',
+          default    : true,
+          operators  : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
+          numberOnly : true,
+        },
+        {
+          key       : 'code',
+          type      : 'number',
+          label     : 'Code',
+          operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
+        },
+        {
+          key       : 'valid',
+          type      : 'boolean',
+          label     : 'Valid',
+          operators : ['$eq', '$ne', '$exists'],
+        },
+        {
+          key       : 'carrier',
+          type      : 'text',
+          label     : 'Carrier',
+          operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
+        },
+        {
+          key       : 'location',
+          type      : 'text',
+          label     : 'Location',
+          operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
+        },
+      ],
+      multiple : false,
     };
   }
 

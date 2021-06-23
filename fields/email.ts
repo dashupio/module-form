@@ -51,7 +51,9 @@ export default class EmailField extends Struct {
   get data() {
     // return field type label
     return {
-      tabs : ['Config', 'Display'],
+      tabs      : ['Config', 'Display'],
+      multiple  : false,
+      operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
     };
   }
 
