@@ -60,6 +60,7 @@ const FieldPhone = (props = {}) => {
           autoFocus : true
         }}
         onChange={ (val) => onChange(`+${val}`) }
+        readOnly={ props.readOnly }
         defaultCountry={ value?.country || props.field.country || 'us' }
       />
       { !!props.field.help && !props.noLabel && (

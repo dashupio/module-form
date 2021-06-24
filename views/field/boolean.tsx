@@ -28,6 +28,7 @@ const FieldBoolean = (props = {}) => {
             value : key.toLowerCase(),
           }
         }) }
+        readOnly={ props.readOnly }
         onChange={ (val) => props.onChange(props.field, val?.value === 'true') }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ {

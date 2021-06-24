@@ -22,6 +22,7 @@ const FieldMoney = (props = {}) => {
         type="number"
         step="0.01"
         onChange={ (e) => props.onChange(props.field, e.target.value) }
+        readOnly={ props.readOnly }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ props.value }
         />

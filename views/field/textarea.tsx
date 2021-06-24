@@ -21,6 +21,7 @@ const FieldTextarea = (props = {}) => {
       <Form.Control
         as="textarea"
         rows={ 3 }
+        readOnly={ props.readOnly }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         />
       { !!props.field.help && !props.noLabel && (

@@ -58,14 +58,15 @@ const FieldSelect = (props = {}) => {
       <Select
         isClearable
         
+        value={ getValue() }
         options={ props.field.options }
         isMulti={ props.field.multiple }
         onChange={ (val) => props.onChange(props.field, Array.isArray(val) ? val.map((v) => v.value) : val?.value) }
+        readOnly={ props.readOnly }
         components={ {
           Option,
         } }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ getValue() }
         />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">

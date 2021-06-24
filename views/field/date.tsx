@@ -17,7 +17,7 @@ const FieldDate = (props = {}) => {
   const [first, setFirst] = useState(true);
   const [start, setStart] = useState(new Date(props.value?.start || new Date()));
   const [period, setPeriod] = useState(props.value?.period);
-  const [repeat, setRepeat] = useState(props.value?.repeat);
+  const [repeat, setRepeat] = useState(typeof props.value?.repeat === 'object' ? props.value?.repeat : null);
   const [amount, setAmount] = useState(props.value?.amount || 1);
   const [endOpen, setEndOpen] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
@@ -139,7 +139,7 @@ const FieldDate = (props = {}) => {
 
     // set first
     if (first) setFirst(false);
-  }, [getValue()]);
+  }, [JSON.stringify(getValue())]);
 
   // return text field
   return (
@@ -167,6 +167,7 @@ const FieldDate = (props = {}) => {
             value={ startMask }
             onFocus={ (e) => setStartOpen(true) }
             onChange={ (e) => onStart(e) }
+            readOnly={ props.readOnly }
             className="form-control"
             />
         </InputGroup>
@@ -246,7 +247,7 @@ const FieldDate = (props = {}) => {
           </OverlayTrigger>
         ) }
         
-        { props.field.repeat && (
+        { !!props.field.repeat && (
           <OverlayTrigger
             overlay={
               <Tooltip>

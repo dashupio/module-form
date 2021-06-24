@@ -21,6 +21,7 @@ const FieldEmail = (props = {}) => {
       <Form.Control
         type="email"
         onChange={ (e) => props.onChange(props.field, e.target.value) }
+        readOnly={ props.readOnly }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ props.value }
         />

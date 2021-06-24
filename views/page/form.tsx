@@ -7,8 +7,9 @@ import React, { useState, useEffect } from 'react';
 // create model page
 const FormPage = (props = {}) => {
   // groups
+  const [share, setShare] = useState(false);
   const [config, setConfig] = useState(false);
-  const [updated, setUpdated] = useState(false);
+  const [updated, setUpdated] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [prevent, setPrevent] = useState(false);
@@ -33,7 +34,7 @@ const FormPage = (props = {}) => {
       // set data
       setActualData({});
     }
-  }, [props.page.get('_id'), props.page.get('data.model'), props.page.get('type'), props.item && props.item.toJSON()]);
+  }, [props.page.get('_id'), props.page.get('data.model'), props.item && props.item.toJSON()]);
 
   // on fields
   const setFields = (fields, prevent) => {
@@ -51,7 +52,7 @@ const FormPage = (props = {}) => {
   const setData = (data) => {
     // set updated
     setUpdated(true);
-    setActualData(data);
+    setActualData({ ...data });
   };
 
   // on submit
@@ -115,9 +116,10 @@ const FormPage = (props = {}) => {
   return (
     <Page { ...props } loading={ loading } require={ required } bodyClass="flex-column">
 
+      <Page.Share show={ share } onHide={ (e) => setShare(false) } />
       <Page.Config show={ config } onHide={ (e) => setConfig(false) } />
 
-      <Page.Menu onConfig={ () => setConfig(true) } onShare>
+      <Page.Menu onConfig={ () => setConfig(true) } presence={ props.presence } onShare={ () => setShare(true) }>
         { props.dashup.can(props.page, 'manage') && (
           <button className={ `me-2 btn btn-${!updating ? 'link text-dark' : 'primary'}` } onClick={ (e) => setUpdating(!updating) }>
             <i className={ `fat fa-${!updating ? 'pencil' : 'check'} me-2` } />

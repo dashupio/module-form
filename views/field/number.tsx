@@ -21,6 +21,7 @@ const FieldNumber = (props = {}) => {
       <Form.Control
         type="number"
         onChange={ (e) => props.onChange(props.field, parseFloat(e.target.value)) }
+        readOnly={ props.readOnly }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ props.value }
       />
