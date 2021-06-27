@@ -4,7 +4,7 @@ import React from 'react';
 import colors from '../colors';
 
 // text field
-const FieldSelectView = (props = {}) => {
+const FieldRadioView = (props = {}) => {
 
   // get value
   const value = Array.isArray(props.value) ? props.value : (props.value ? [props.value] : []);
@@ -34,4 +34,4 @@ const FieldSelectView = (props = {}) => {
 };
 
 // export default
-export default FieldSelectView;
+export default FieldRadioView;

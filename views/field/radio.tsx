@@ -4,7 +4,7 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 
 // text field
-const FieldTextarea = (props = {}) => {
+const FieldRadio = (props = {}) => {
 
   // return text field
   return (
@@ -18,14 +18,21 @@ const FieldTextarea = (props = {}) => {
           ) }  
         </Form.Label>
       ) }
-      <Form.Control
-        as="textarea"
-        rows={ 3 }
-        onChange={ (e) => props.onChange(props.field, e.target.value) }
-        readOnly={ props.readOnly }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
-        />
+      { (props.field.options || []).map((option, i) => {
+        // return jsx
+        return (
+          <Form.Check
+            id={ `option-${option.uuid || i}` }
+            key={ `option-${option.uuid || i}` }
+            type="radio"
+            name={ props.field.name || props.field.uuid }
+            value={ option.value }
+            label={ option.label }
+            checked={ props.value === option.value || (props.value || []).includes(option.value) }
+            onChange={ (e) => props.onChange(props.field, option.value) }
+          />
+        );
+      }) }
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }
@@ -36,4 +43,4 @@ const FieldTextarea = (props = {}) => {
 };
 
 // export default
-export default FieldTextarea;
+export default FieldRadio;

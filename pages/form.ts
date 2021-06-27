@@ -83,6 +83,8 @@ export default class FormPage extends Struct {
     return {
       view   : 'page/form',
       config : 'page/form/config',
+
+      wysiwyg : 'wysiwyg',
     };
   }
 

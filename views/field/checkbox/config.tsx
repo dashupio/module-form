@@ -26,7 +26,7 @@ const debounce = (func, timeout = 1000) => {
 }
 
 // text field
-const FieldSelectConfig = (props = {}) => {
+const FieldCheckboxConfig = (props = {}) => {
   // set state
   const [color, setColor] = useState(null);
   const [option, setOption] = useState(false);
@@ -130,4 +130,4 @@ const FieldSelectConfig = (props = {}) => {
 };
 
 // export default
-export default FieldSelectConfig;
+export default FieldCheckboxConfig;

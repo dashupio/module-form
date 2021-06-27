@@ -122,7 +122,7 @@ const ImageField = (props = {}) => {
   return (
     <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
       { !props.noLabel && (
-        <Form.Label>
+        <Form.Label className="w-100">
           { props.field.label || (
             <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
               <i>Set Label</i>
@@ -133,32 +133,34 @@ const ImageField = (props = {}) => {
       
       { props.field.input === 'input' ? (
         <>
-          { values.map((file, i) => {
-            // return jsx
-            return (
-              <div key={ `file-${file.id || file.temp}` } className="d-inline">
-                { file.id && (
-                  <input type="hidden" name={ `${props.name}[${i}]` } value={ file.id } className="file-input" />
-                ) }
-                <div className="btn-group me-2 mb-2">
-                  <a className="btn btn-secondary text-overflow" target="_blank">
-                    { file.name }
-                  </a>
-                  <button onClick={ (e) => onRemove(file) } className="btn btn-danger">
-                    <i className="fa fa-times" />
-                  </button>
+          <div>
+            { values.map((file, i) => {
+              // return jsx
+              return (
+                <div key={ `file-${file.id || file.temp}` } className="d-inline">
+                  { file.id && (
+                    <input type="hidden" name={ `${props.name}[${i}]` } value={ file.id } className="file-input" />
+                  ) }
+                  <div className="btn-group me-2 mb-2">
+                    <a className="btn btn-secondary text-overflow" target="_blank">
+                      { file.name }
+                    </a>
+                    <button onClick={ (e) => onRemove(file) } className="btn btn-danger">
+                      <i className="fa fa-times" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          }) }
+              );
+            }) }
+          </div>
           { values.filter((file) => file.uploaded).map((file, i) => {
             // return jsx
             return (
-              <ProgressBar now={ file.uploaded } className="my-3" />
+              <ProgressBar key={ `progress-${file.id || file.temp}` } now={ file.uploaded } className="my-3" />
             )
           }) }
           { !values.length && !props.field.multiple && (
-            <input type="file" className="form-control" onChange={ (e) => onUpload(e) } multiple={ props.field.multiple } />
+            <input type="file" className="form-control" onChange={ (e) => onUpload(e) } accept={ props.field.accept || 'image/*' } multiple={ props.field.multiple } />
           )}
         </>
       ) : (
@@ -203,7 +205,7 @@ const ImageField = (props = {}) => {
           { (!values.length || props.field.multiple) && (
             <div className={ props.column ? 'mb-2' : `${props.field.size || 'col-6 col-md-4 col-xl-3'} mb-2` }>
               <label className="card card-outline-success card-upload">
-                <input type="file" className="file-input" multiple={ props.field.multiple } onChange={ (e) => onUpload(e) } />
+                <input type="file" className="file-input" multiple={ props.field.multiple } accept={ props.field.accept || 'image/*' } onChange={ (e) => onUpload(e) } />
                 <div className="d-flex align-items-center">
                   <div>
                     <i className="fa fa-plus" />

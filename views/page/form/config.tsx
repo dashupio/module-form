@@ -11,7 +11,7 @@ const PageFormConfig = (props = {}) => {
     // get forms
     const models = Array.from(props.dashup.get('pages').values()).filter((page) => {
       // return model pages
-      return page.get('type') === 'model';
+      return page.get('type') === 'model' && !page.get('archived');
     });
 
     // return mapped

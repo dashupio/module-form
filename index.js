@@ -9,14 +9,19 @@ const FileField = require('./fields/file');
 const TextField = require('./fields/text');
 const DateField = require('./fields/date');
 const UserField = require('./fields/user');
+const TeamField = require('./fields/team');
 const EmailField = require('./fields/email');
 const ImageField = require('./fields/image');
 const PhoneField = require('./fields/phone');
 const MoneyField = require('./fields/money');
+const RadioField = require('./fields/radio');
 const NumberField = require('./fields/number');
 const SelectField = require('./fields/select');
+const AddressField = require('./fields/address');
 const BooleanField = require('./fields/boolean');
+const WysiwygField = require('./fields/wysiwyg');
 const TextareaField = require('./fields/textarea');
+const CheckboxField = require('./fields/checkbox');
 
 /**
  * export module
@@ -40,13 +45,18 @@ class FormModule extends Module {
     fn('field', TextField);
     fn('field', UserField);
     fn('field', FileField);
+    fn('field', TeamField);
     fn('field', EmailField);
     fn('field', ImageField);
     fn('field', PhoneField);
     fn('field', MoneyField);
+    fn('field', RadioField);
     fn('field', NumberField);
     fn('field', SelectField);
+    fn('field', AddressField);
     fn('field', BooleanField);
+    fn('field', WysiwygField);
+    fn('field', CheckboxField);
     fn('field', TextareaField);
   }
 }

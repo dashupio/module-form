@@ -2,9 +2,10 @@
 // import dependencies
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import Wysiwyg from '../wysiwyg';
 
 // text field
-const FieldTextarea = (props = {}) => {
+const FieldWysiwyg = (props = {}) => {
 
   // return text field
   return (
@@ -18,13 +19,10 @@ const FieldTextarea = (props = {}) => {
           ) }  
         </Form.Label>
       ) }
-      <Form.Control
-        as="textarea"
-        rows={ 3 }
-        onChange={ (e) => props.onChange(props.field, e.target.value) }
-        readOnly={ props.readOnly }
+      <Wysiwyg
+        value={ props.value }
+        onChange={ (v) => props.onChange(props.field, v) }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
         />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
@@ -36,4 +34,4 @@ const FieldTextarea = (props = {}) => {
 };
 
 // export default
-export default FieldTextarea;
+export default FieldWysiwyg;

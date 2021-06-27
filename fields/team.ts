@@ -8,7 +8,7 @@ const loading = {};
 /**
  * build address helper
  */
-export default class ImageField extends Struct {
+export default class TeamField extends Struct {
 
   /**
    * construct model field
@@ -19,7 +19,7 @@ export default class ImageField extends Struct {
     // run super
     super(...args);
 
-    // bind
+    // sanitise
     this.submitAction   = this.submitAction.bind(this);
     this.sanitiseAction = this.sanitiseAction.bind(this);
   }
@@ -30,9 +30,8 @@ export default class ImageField extends Struct {
   get views() {
     // return object of views
     return {
-      view   : 'field/image/view',
-      input  : 'field/image',
-      config : 'field/image/config',
+      view  : 'field/team/view',
+      input : 'field/team',
     };
   }
   /**
@@ -51,7 +50,7 @@ export default class ImageField extends Struct {
    */
   get type() {
     // return field type label
-    return 'image';
+    return 'team';
   }
 
   /**
@@ -62,7 +61,7 @@ export default class ImageField extends Struct {
     return {
       tabs      : ['Config', 'Display'],
       multiple  : true,
-      operators : ['$exists'],
+      operators : ['$eq', '$ne', '$in', '$nin', '$exists'],
     };
   }
 
@@ -71,7 +70,7 @@ export default class ImageField extends Struct {
    */
   get title() {
     // return field type label
-    return 'Image';
+    return 'Team';
   }
 
   /**
@@ -87,16 +86,16 @@ export default class ImageField extends Struct {
    */
   get description() {
     // return description string
-    return 'Image Field';
+    return 'Team Field';
   }
 
   /**
-   * load member
+   * load team
    *
    * @param id 
    * @param opts 
    */
-  loadImage(id, opts) {
+  loadTeam(id, opts) {
     // fix id
     id = id._id || id.id || id;
 
@@ -108,7 +107,7 @@ export default class ImageField extends Struct {
       // query model
       new Query({
         ...opts,
-      }, 'image').findById(id).then(resolve);
+      }, 'team').findById(id).then(resolve);
     });
 
     // add timeout
@@ -154,7 +153,7 @@ export default class ImageField extends Struct {
       if (`${id}`.match(/^[0-9a-fA-F]{24}$/)) return id;
 
       // query model
-      const item = await this.loadImage(id, opts);
+      const item = await this.loadTeam(id, opts);
 
       // check item
       if (item) {
@@ -162,7 +161,7 @@ export default class ImageField extends Struct {
         return item._id || item.get('_id');
       }
     }));
-
+    
     // return value map
     return {
       value : data.filter((i) => i),
@@ -182,14 +181,14 @@ export default class ImageField extends Struct {
     if (!Array.isArray(value)) value = [value];
 
     // filter out not matching
-    value = value.map((v) => v.id || v).filter((v) => v && v.match(/^[0-9a-fA-F]{24}$/));
+    value = value.filter((v) => v.match(/^[0-9a-fA-F]{24}$/));
 
-    // load users
-    const images = await Promise.all(value.map((id) => this.loadImage(id, opts)));
+    // load teams
+    const teams = await Promise.all(value.map((id) => this.loadTeam(id, opts)));
 
     // map values
     return {
-      sanitised : images.map((val) => val && val.sanitise()).filter((v) => v)
+      sanitised : teams.map((val) => val && val.sanitise()).filter((v) => v)
     };
   }
 }

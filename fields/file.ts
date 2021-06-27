@@ -30,8 +30,9 @@ export default class FileField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/file/view',
-      input : 'field/file',
+      view   : 'field/file/view',
+      input  : 'field/file',
+      config : 'field/file/config',
     };
   }
   /**

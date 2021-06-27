@@ -4,6 +4,9 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Select } from '@dashup/ui';
 
+// colors
+import colors from './colors';
+
 // text field
 const FieldSelect = (props = {}) => {
 
@@ -31,8 +34,10 @@ const FieldSelect = (props = {}) => {
         className={ `dropdown-item d-flex align-items-center flex-row px-3 py-2${isSelected ? ' active' : ''}` }
         { ...innerProps }
       >
-        { data.color && (
-          <span className={ `badge bg-${data.color} me-2` }>
+        { !!data.color && (
+          <span className="badge me-2" style={ {
+            background : colors[data.color] || data.color?.hex || data.color || null,
+          } }>
             &nbsp;
           </span>
         ) }
@@ -42,6 +47,22 @@ const FieldSelect = (props = {}) => {
       </div>
     ) : null;
   };
+
+  // box
+  const box = (color = '#ccc') => ({
+    display    : 'flex',
+    alignItems : 'center',
+  
+    ':before': {
+      width           : 14,
+      height          : 14,
+      display         : 'block',
+      content         : '" "',
+      marginRight     : 5,
+      borderRadius    : 3,
+      backgroundColor : color,
+    },
+  });
 
   // return text field
   return (
@@ -59,6 +80,29 @@ const FieldSelect = (props = {}) => {
         isClearable
         
         value={ getValue() }
+        styles={ {
+          singleValue : (styles, { data }) => {
+            // check color
+            if (!data.color) return styles;
+
+            // return color
+            return { ...styles, ...box(colors[data.color] || data.color?.hex || data.color) };
+          },
+          multiValue: (styles, { data }) => {
+            // check color
+            if (!data.color) return styles;
+
+            // return styles
+            return { ...styles, backgroundColor : colors[data.color] || data.color?.hex || data.color };
+          },
+          multiValueLabel: (styles, { data }) => {
+            // check color
+            if (!data.color || !data.color?.hex) return styles;
+
+            // return styles
+            return { ...styles, color : data.color?.drk ? '#fff' : '#000' };
+          },
+        } }
         options={ props.field.options }
         isMulti={ props.field.multiple }
         onChange={ (val) => props.onChange(props.field, Array.isArray(val) ? val.map((v) => v.value) : val?.value) }
@@ -66,7 +110,7 @@ const FieldSelect = (props = {}) => {
         components={ {
           Option,
         } }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+        placeholder={ props.field.placeholder || `Select ${props.field.label}` }
         />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">

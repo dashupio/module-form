@@ -8,11 +8,13 @@ import React, { useState, useEffect } from 'react';
 const FormPage = (props = {}) => {
   // groups
   const [share, setShare] = useState(false);
+  const [route, setRoute] = useState(props.route);
   const [config, setConfig] = useState(false);
   const [updated, setUpdated] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [prevent, setPrevent] = useState(false);
+  const [creating, setCreating] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [removing, setRemoving] = useState(false);
   const [actualData, setActualData] = useState((props.item && props.item.get()) || {});
@@ -56,6 +58,19 @@ const FormPage = (props = {}) => {
   };
 
   // on submit
+  const onCreate = async (e) => {
+    // prevent
+    setActualData({});
+    props.setItem(null);
+
+    // set no form
+    setCreating(true);
+
+    // unset
+    setTimeout(() => setCreating(false), 200);
+  }
+
+  // on submit
   const onSubmit = async (e) => {
     // prevent
     e.preventDefault();
@@ -80,7 +95,11 @@ const FormPage = (props = {}) => {
       ...actualData,
     });
 
-    // submitting
+    // set item
+    props.setItem(new props.dashup.Model(result, props.dashup));
+
+    // set success
+    setSuccess(true);
     setSubmitting(false);
   };
 
@@ -100,7 +119,7 @@ const FormPage = (props = {}) => {
     setRemoving(false);
 
     // go
-    let redirect = `/app/${props.page.get('_id')}`;
+    let redirect = null;
 
     // check redirect
     if (`${window.location.search}`.includes('?redirect=')) {
@@ -109,7 +128,11 @@ const FormPage = (props = {}) => {
     }
 
     // go
-    eden.router.go(redirect);
+    if (redirect) return eden.router.go(redirect);
+
+    // recreate
+    onCreate(e);
+    setRoute(null);
   };
 
   // return jsx
@@ -127,18 +150,23 @@ const FormPage = (props = {}) => {
           </button>
         ) }
       </Page.Menu>
-      { props.route === 'remove' ? (
+      { route === 'remove' ? (
         <Page.Body>
           <div className="px-0 px-lg-3 container-lg">
             <div className="card">
-              <div className="card-body lead">
-                Are you sure you want to remove this item?
+              <div className="card-body text-center">
+                <h1 className="my-5">
+                  Are you sure you want to remove this item?
+                </h1>
               </div>
 
-              <div className="card-footer text-end pt-0 pb-3">
-                <button className="btn btn-danger" onClick={ (e) => onRemove(e) }>
+              <div className="card-footer d-flex pt-0 pb-3">
+                <Button variant="info" className="me-auto" onClick={ (e) => setRoute(null) }>
+                  Back
+                </Button>
+                <Button variant="danger" className="ms-auto" onClick={ (e) => onRemove(e) }>
                   { removing ? 'Removing...' : 'Remove' }
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -148,41 +176,67 @@ const FormPage = (props = {}) => {
           <div className="px-0 px-lg-3 container-lg">
             <div className="card">
               { success ? (
-                <div className="card-body text-center">
-                  <h1 className="my-5">
-                    Successfully submitted { props.page.get('name') }.
-                  </h1>
-                </div>
+                <>
+                  <div className="card-body text-center">
+                    <h1 className="my-5">
+                      Successfully submitted { props.page.get('name') }.
+                    </h1>
+                  </div>
+                  <div className="card-footer d-flex pt-0 pb-3">
+                    <Button variant="info" className="me-auto" onClick={ (e) => setSuccess(false) }>
+                      Back
+                    </Button>
+                    <Button variant="success" className="ms-auto" onClick={ (e) => !props.setItem(null) && !setActualData({}) && !setSuccess(false) }>
+                      Create New
+                    </Button>
+                  </div>
+                </>
               ) : (
                 <>
                   <div className="card-body p-relative">
-                    <Form
-                      id={ props.page.get('_id') }
-                      data={ actualData }
-                      page={ props.page }
-                      fields={ props.page.get('data.fields') || [] }
-                      dashup={ props.dashup }
-                      setData={ setData }
-                      updating={ props.dashup.can(props.page, 'manage') && updating }
-                      onSubmit={ (e) => onSubmit(e) }
-                      getForms={ props.getForms }
-                      getField={ props.getField }
-                      getFields={ props.getFields }
-                      setFields={ setFields }
-                      available={ props.available.fields }
-                      setPrevent={ setPrevent }
-                      getFieldStruct={ props.getFieldStruct }
-                      />
+                    { !creating && (
+                      <Form
+                        id={ props.page.get('_id') }
+                        data={ actualData }
+                        page={ props.page }
+                        fields={ props.page.get('data.fields') || [] }
+                        dashup={ props.dashup }
+                        setData={ setData }
+                        updating={ props.dashup.can(props.page, 'manage') && updating }
+                        onSubmit={ (e) => onSubmit(e) }
+                        getForms={ props.getForms }
+                        getField={ props.getField }
+                        getFields={ props.getFields }
+                        setFields={ setFields }
+                        available={ props.available.fields }
+                        setPrevent={ setPrevent }
+                        getFieldStruct={ props.getFieldStruct }
+                        />
+                    ) }
                   </div>
-                  <div className="card-footer text-end pt-0 pb-3">
+                  <div className="card-footer d-flex pt-0 pb-3">
                     { submitting ? (
-                      <Button disabled variant="success">
-                        { props.current ? 'Updating...' : 'Submitting...' }
+                      <Button disabled variant="success" className="ms-auto">
+                        { props.item && props.item.get('_id') ? 'Updating...' : 'Submitting...' }
                       </Button>
                     ) : (
-                      <Button variant="success" disabled={ !updated || prevent } onClick={ (e) => onSubmit(e) }>
-                        { prevent ? 'Uploading...' : (props.current ? 'Update' : 'Submit') }
-                      </Button>
+                      <>
+                        { !!props.item && !!props.item.get('_id') && (
+                          <>
+                            { !!props.dashup.can(props.page, 'submit') && (
+                              <Button variant="danger" className="me-2" onClick={ (e) => setRoute('remove') }>
+                                Remove
+                              </Button>
+                            ) }
+                            <Button variant="info" className="me-auto" onClick={ (e) => onCreate(e) }>
+                              Create New
+                            </Button>
+                          </>
+                        ) }
+                        <Button variant="success" className="ms-auto" disabled={ !updated || prevent } onClick={ (e) => onSubmit(e) }>
+                          { prevent ? 'Uploading...' : (props.item && props.item.get('_id') ? 'Update' : 'Submit') }
+                        </Button>
+                      </>
                     ) }
                   </div>
                 </>

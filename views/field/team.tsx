@@ -5,15 +5,15 @@ import { Form, Dropdown } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 
 // text field
-const FieldUser = (props = {}) => {
+const FieldTeam = (props = {}) => {
   // search
   const [search, setSearch] = useState('');
   const [options, setOptions] = useState([]);
 
   // get short name
-  const getName = (user) => {
+  const getName = (team) => {
     // get name
-    const name = `${user.name || ''}`.trim() || 'N A';
+    const name = `${team.name || ''}`.trim() || 'N A';
 
     // return name
     return `${(name.split(' ')[0] || '')[0] || ''}${(name.split(' ')[1] || '')[0] || ''}`;
@@ -44,7 +44,7 @@ const FieldUser = (props = {}) => {
   // load options
   const loadOptions = async (inputValue = '') => {
     // load data
-    const data = await (await fetch(`/app/${props.dashup && props.dashup.get('_id')}/member/query`)).json();
+    const data = await (await fetch(`/app/${props.dashup && props.dashup.get('_id')}/team/query`)).json();
 
     // return map
     return data.filter((item) => `${item.label}`.toLowerCase().includes(`${inputValue}`.toLowerCase())).map((item) => {
@@ -118,4 +118,4 @@ const FieldUser = (props = {}) => {
 };
 
 // export default
-export default FieldUser;
+export default FieldTeam;

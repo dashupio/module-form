@@ -1,11 +1,11 @@
 
 // import field interface
-import { Struct } from '@dashup/module';
+import { Struct, Query } from '@dashup/module';
 
 /**
  * build address helper
  */
-export default class BooleanField extends Struct {
+export default class CheckboxField extends Struct {
 
   /**
    * construct model field
@@ -15,9 +15,6 @@ export default class BooleanField extends Struct {
   constructor(...args) {
     // run super
     super(...args);
-
-    // submit
-    this.submitAction = this.submitAction.bind(this);
   }
 
   /**
@@ -26,8 +23,9 @@ export default class BooleanField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/boolean/view',
-      input : 'field/boolean',
+      view   : 'field/checkbox/view',
+      input  : 'field/checkbox',
+      config : 'field/checkbox/config',
     };
   }
   /**
@@ -36,7 +34,7 @@ export default class BooleanField extends Struct {
   get actions() {
     // return object of views
     return {
-      submit : this.submitAction,
+      
     };
   }
 
@@ -45,7 +43,7 @@ export default class BooleanField extends Struct {
    */
   get type() {
     // return field type label
-    return 'boolean';
+    return 'checkbox';
   }
 
   /**
@@ -55,8 +53,7 @@ export default class BooleanField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
-      multiple  : false,
-      operators : ['$eq', '$ne', '$exists'],
+      operators : ['$eq', '$ne', '$in', '$nin', '$inc', '$ninc', '$exists'],
     };
   }
 
@@ -65,7 +62,7 @@ export default class BooleanField extends Struct {
    */
   get title() {
     // return field type label
-    return 'Boolean';
+    return 'Checkbox';
   }
 
   /**
@@ -81,23 +78,6 @@ export default class BooleanField extends Struct {
    */
   get description() {
     // return description string
-    return 'Boolean Field';
-  }
-
-  /**
-   * submit field value
-   *
-   * @param {*} param0 
-   * @param {*} field 
-   * @param {*} value 
-   */
-  async submitAction(opts, field, value) {
-    // check value
-    value = value === 'true' || !!value;
-
-    // value
-    return {
-      value,
-    };
+    return 'Checkbox Field';
   }
 }
