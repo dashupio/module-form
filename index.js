@@ -18,6 +18,7 @@ const MoneyField = require('./fields/money');
 const RadioField = require('./fields/radio');
 const NumberField = require('./fields/number');
 const SelectField = require('./fields/select');
+const EncryptField = require('./fields/encrypt');
 const AddressField = require('./fields/address');
 const BooleanField = require('./fields/boolean');
 const WysiwygField = require('./fields/wysiwyg');
@@ -58,6 +59,7 @@ class FormModule extends Module {
     fn('field', AddressField);
     fn('field', BooleanField);
     fn('field', WysiwygField);
+    fn('field', EncryptField);
     fn('field', CheckboxField);
     fn('field', TextareaField);
   }

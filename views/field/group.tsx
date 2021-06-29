@@ -89,7 +89,7 @@ const FieldGroup = (props = {}) => {
                 adds={ false }
                 parent={ props.field.uuid }
                 setData={ (d) => setData(d, i) }
-                available={ [...props.available].filter((v) => v.type !== 'group') }
+                available={ [...(Array.isArray(props.available) ? props.available : [])].filter((v) => v.type !== 'group') }
                 />
             </div>
 

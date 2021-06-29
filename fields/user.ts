@@ -34,6 +34,7 @@ export default class UserField extends Struct {
       input : 'field/user',
     };
   }
+
   /**
    * returns object of views
    */
