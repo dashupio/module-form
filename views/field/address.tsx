@@ -1,6 +1,6 @@
 
 // import dependencies
-import { Form, Button, Dropdown } from 'react-bootstrap';
+import { Form, Dropdown } from 'react-bootstrap';
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
 
@@ -83,7 +83,7 @@ const FieldAddress = (props = {}) => {
 
           // return jsx
           return (
-            <Dropdown>
+            <Dropdown align="end">
               <div className="d-flex">
                 <input
                   { ...getInputProps({
@@ -116,7 +116,7 @@ const FieldAddress = (props = {}) => {
                 </div>
               ) }
 
-              <Dropdown.Menu className="p-3">
+              <Dropdown.Menu className="p-3" align="end">
                 <div className="row">
                   <div className="col-4 mb-3">
                     <label className="form-label">

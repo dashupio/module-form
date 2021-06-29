@@ -10,6 +10,7 @@ const TextField = require('./fields/text');
 const DateField = require('./fields/date');
 const UserField = require('./fields/user');
 const TeamField = require('./fields/team');
+const GroupField = require('./fields/group');
 const EmailField = require('./fields/email');
 const ImageField = require('./fields/image');
 const PhoneField = require('./fields/phone');
@@ -46,6 +47,7 @@ class FormModule extends Module {
     fn('field', UserField);
     fn('field', FileField);
     fn('field', TeamField);
+    fn('field', GroupField);
     fn('field', EmailField);
     fn('field', ImageField);
     fn('field', PhoneField);
