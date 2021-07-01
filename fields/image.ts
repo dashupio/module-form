@@ -61,6 +61,7 @@ export default class ImageField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : true,
       operators : ['$exists'],
     };

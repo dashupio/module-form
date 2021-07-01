@@ -10,7 +10,10 @@ import './upload.scss';
 // text field
 const FieldFile = (props = {}) => {
   // value
-  const initialValue = Array.isArray(props.value) ? props.value : (props.value && [props.value]) || [];
+  const value = props.value;
+
+  // value
+  const initialValue = Array.isArray(value) ? value : (value && [value]) || [];
 
   // useState
   const [values, setValues] = useState(initialValue);

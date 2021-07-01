@@ -52,6 +52,7 @@ export default class MoneyField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : false,
       operators : ['$gt', '$lt', '$gte', '$lte', '$eq', '$ne', '$exists'],
     };

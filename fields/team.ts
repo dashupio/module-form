@@ -60,6 +60,7 @@ export default class TeamField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : true,
       operators : ['$eq', '$ne', '$in', '$nin', '$exists'],
     };

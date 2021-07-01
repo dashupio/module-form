@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 // block list
 const BlockForm = (props = {}) => {
   // use state
+  const [item, setItem] = useState(props.item);
   const [loading, setLoading] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [prevent, setPrevent] = useState(false);
@@ -16,15 +17,38 @@ const BlockForm = (props = {}) => {
 
   // use effect
   useEffect(() => {
-    return;
+    // updating
+    let timeout = null;
+    let updating = false;
+
     // set loading
-    if (props.item) {
-      // set data
-      setActualData((props.item && props.item.get()) || {});
-    } else if (!props.item) {
-      // set data
-      setActualData({});
+    if (props.item && !item) {
+      // updating
+      updating = true;
+    } else if (!props.item && item) {
+      // updating true
+      updating = true;
+    } else if (props.item && item && props.item.get('_id') !== item.get('_id')) {
+      // updating
+      updating = true;
     }
+
+    // check updating
+    if (updating) {
+      setItem(props.item);
+      setLoading(true);
+      setActualData((props.item && props.item.get()) || {});
+
+      // timeout
+      timeout = setTimeout(() => {
+        setLoading(false);
+      }, 200);
+    }
+
+    // return done
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [props.item && props.item.get()]);
 
   // get forms
@@ -124,7 +148,7 @@ const BlockForm = (props = {}) => {
               { props.item ? 'Updating...' : 'Submitting...' }
             </Button>
           ) : (
-            <Button variant="success" disabled={ !updated } onClick={ (e) => onSubmit(e) }>
+            <Button variant="success" disabled={ prevent || !updated } onClick={ (e) => onSubmit(e) }>
               { props.item ? 'Update' : 'Submit' }
             </Button>
           ) }

@@ -52,6 +52,7 @@ export default class TextField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : false,
       operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
     };

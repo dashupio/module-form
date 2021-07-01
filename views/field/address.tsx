@@ -23,7 +23,7 @@ const FieldAddress = (props = {}) => {
       id  : loaded.place_id,
       geo : {
         lat : loaded.geometry.location.lat(),
-        lng : loaded.geometry.location.lng()
+        lng : loaded.geometry.location.lng(),
       },
       json : {
         city     : (loaded.address_components.find((c) => c.types.includes('locality')) || {}).short_name,
@@ -42,7 +42,7 @@ const FieldAddress = (props = {}) => {
   };
   
   // on component
-  const onComponent = (e, key) => {
+  const onComponent = (e, key) => { 
     // set value
     const value = props.value || {};
 

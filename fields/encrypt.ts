@@ -59,6 +59,7 @@ export default class FieldEncrypt extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : false,
       operators : ['$exists'],
     };

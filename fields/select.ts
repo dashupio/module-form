@@ -53,6 +53,7 @@ export default class SelectField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : true,
       operators : ['$eq', '$ne', '$in', '$nin', '$inc', '$ninc', '$exists'],
     };

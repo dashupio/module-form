@@ -53,6 +53,7 @@ export default class CheckboxField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       operators : ['$eq', '$ne', '$in', '$nin', '$inc', '$ninc', '$exists'],
     };
   }

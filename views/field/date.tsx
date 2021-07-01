@@ -11,14 +11,17 @@ import './date.scss';
 
 // text field
 const FieldDate = (props = {}) => {
+  // value
+  const value = props.value;
+
   // use state
-  const [end, setEnd] = useState(props.value?.end ? new Date(props.value?.end) : null);
-  const [type, setType] = useState(props.value?.type);
+  const [end, setEnd] = useState(value?.end ? new Date(prs.value?.end) : null);
+  const [type, setType] = useState(value?.type);
   const [first, setFirst] = useState(true);
-  const [start, setStart] = useState(new Date(props.value?.start || new Date()));
-  const [period, setPeriod] = useState(props.value?.period);
-  const [repeat, setRepeat] = useState(typeof props.value?.repeat === 'object' ? props.value?.repeat : null);
-  const [amount, setAmount] = useState(props.value?.amount || 1);
+  const [start, setStart] = useState(new Date(value?.start || new Date()));
+  const [period, setPeriod] = useState(value?.period);
+  const [repeat, setRepeat] = useState(typeof value?.repeat === 'object' ? value?.repeat : null);
+  const [amount, setAmount] = useState(value?.amount || 1);
   const [endOpen, setEndOpen] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [untilOpen, setUntilOpen] = useState(false);

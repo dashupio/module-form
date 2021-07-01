@@ -53,6 +53,7 @@ export default class GroupField extends Struct {
     return {
       tabs      : ['Config', 'Display'],
       color     : true,
+      default   : true,
       multiple  : true,
       operators : ['$exists'],
     };

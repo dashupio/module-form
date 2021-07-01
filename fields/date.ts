@@ -79,6 +79,7 @@ export default class DateField extends Struct {
           operators : ['$exists'],
         },
       ],
+      default  : true,
       multiple : false,
     };
   }

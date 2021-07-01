@@ -29,13 +29,6 @@ export default class PhoneField extends Struct {
     return {
       view  : 'field/phone/view',
       input : 'field/phone',
-      /*
-      view     : 'field/model/view',
-      input    : 'field/model/input',
-      config   : 'field/model/config',
-      display  : 'field/model/display',
-      validate : 'field/model/validate',
-      */
     };
   }
   /**
@@ -97,6 +90,7 @@ export default class PhoneField extends Struct {
           operators : ['$eq', '$ne', '$inc', '$ninc', '$exists'],
         },
       ],
+      default  : true,
       multiple : false,
     };
   }

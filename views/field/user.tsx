@@ -21,8 +21,11 @@ const FieldUser = (props = {}) => {
 
   // get value
   const getValue = () => {
+    // value
+    const value = props.value;
+
     // get array of values
-    const values = Array.isArray(props.value) ? props.value : (props.value && [props.value]) || [];
+    const values = Array.isArray(value) ? value : (value && [value]) || [];
 
     // return options
     const options = values.map((item) => {

@@ -61,6 +61,7 @@ export default class UserField extends Struct {
     // return field type label
     return {
       tabs      : ['Config', 'Display'],
+      default   : true,
       multiple  : true,
       operators : ['$eq', '$ne', '$in', '$nin', '$exists'],
     };
@@ -98,7 +99,10 @@ export default class UserField extends Struct {
    */
   loadMember(id, opts) {
     // fix id
-    id = id._id || id.id || id;
+    id = id?._id || id?.id || id;
+
+    // check id
+    if (!id) return;
 
     // check loading
     if (loading[id]) return loading[id];
@@ -182,14 +186,14 @@ export default class UserField extends Struct {
     if (!Array.isArray(value)) value = [value];
 
     // filter out not matching
-    value = value.filter((v) => v.match(/^[0-9a-fA-F]{24}$/));
+    value = value.filter((v) => `${v}`.match(/^[0-9a-fA-F]{24}$/));
 
     // load users
     const users = await Promise.all(value.map((id) => this.loadMember(id, opts)));
 
     // map values
     return {
-      sanitised : users.map((val) => val && val.sanitise()).filter((v) => v)
+      sanitised : (users || []).map((val) => val && val.sanitise()).filter((v) => v)
     };
   }
 }
