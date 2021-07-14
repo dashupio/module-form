@@ -1,7 +1,8 @@
 
 // import dependencies
+import IMask from 'imask';
 import moment from 'moment';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 import React, { useRef, useState, useEffect } from 'react';
 import { Date as DatePicker, Select } from '@dashup/ui';
 import { Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from 'react-bootstrap';
@@ -28,22 +29,77 @@ const FieldDate = (props = {}) => {
   const [repeatOpen, setRepeatOpen] = useState(false);
 
   // get format
-  const getFormat = (mask = false) => {
-    // get mask
-    if (mask) {
-      // check type
-      if (props.field.date === 'date') return 'aaa 99 9999';
+  const getFormat = () => {
+    // format
+    let format = props.field.format || 'MMM DD YYYY hh:mm a';
 
-      // mask
-      return 'aaa 99 9999 99:99 aa';
-    }
-
-    // check type
-    if (props.field.date === 'date') return 'MMM D YYYY';
+    // check format
+    if (props.field.date === 'date') format = 'MMM DD YYYY';
+    if (props.field.date === 'datetime') format = 'MMM DD YYYY hh:mm a';
 
     // return with time
-    return 'MMM D YYYY hh:mm a';
+    return format;
   };
+
+  // get mask
+  const getMask = () => {
+    // format
+    const format = getFormat();
+
+    return {
+      mask    : Date,
+      lazy    : false,
+      pattern : format,
+    
+      format : (date) => {
+        return moment(date).format(format);
+      },
+      parse : (str) => {
+        return moment(str, format);
+      },
+    
+      blocks : {
+        YYYY : {
+          to   : 2100,
+          mask : IMask.MaskedRange,
+          from : 1,
+        },
+        MM : {
+          to   : 12,
+          mask : IMask.MaskedRange,
+          from : 1,
+        },
+        MMM : {
+          mask : IMask.MaskedEnum,
+          enum : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        },
+        DD : {
+          to   : 31,
+          mask : IMask.MaskedRange,
+          from : 1,
+        },
+        HH : {
+          to   : 23,
+          mask : IMask.MaskedRange,
+          from : 0,
+        },
+        hh : {
+          to   : 12,
+          mask : IMask.MaskedRange,
+          from : 1,
+        },
+        mm : {
+          to   : 59,
+          mask : IMask.MaskedRange,
+          from : 0,
+        },
+        a : {
+          mask : IMask.MaskedEnum,
+          enum : ['am', 'pm'],
+        }
+      }
+    }
+  }
 
   // masks
   const [endMask, setEndMask] = useState(moment(end || start || new Date()).format(getFormat()));
@@ -79,9 +135,12 @@ const FieldDate = (props = {}) => {
   };
 
   // on start
-  const onEnd = (e) => {
+  const onEnd = (v) => {
+    // set mask
+    setEndMask(v);
+    
     // parsed date
-    const parsedDate = moment(e.target.value, getFormat()).toDate();
+    const parsedDate = moment(v, getFormat()).toDate();
 
     // set end
     if (!isNaN(parsedDate.getTime())) {
@@ -90,12 +149,12 @@ const FieldDate = (props = {}) => {
   };
 
   // on start
-  const onStart = (e) => {
+  const onStart = (v) => {
     // set mask
-    setStartMask(e.target.value);
+    setStartMask(v);
     
     // parsed date
-    const parsedDate = moment(e.target.value, getFormat()).toDate();
+    const parsedDate = moment(v, getFormat()).toDate();
 
     // set end
     if (!isNaN(parsedDate.getTime())) {
@@ -164,12 +223,11 @@ const FieldDate = (props = {}) => {
               Start
             </InputGroup.Text>
           ) }
-          <InputMask
-            mask={ getFormat(true) }
-            type="text"
+          <IMaskInput
+            { ...getMask() }
             value={ startMask }
-            onFocus={ (e) => setStartOpen(true) }
-            onChange={ (e) => onStart(e) }
+            onClick={ (e) => setStartOpen(true) }
+            onAccept={ (e) => onStart(e) }
             readOnly={ props.readOnly }
             className="form-control"
             />
@@ -205,12 +263,12 @@ const FieldDate = (props = {}) => {
                   <InputGroup.Text>
                     End
                   </InputGroup.Text>
-                  <InputMask
-                    mask={ getFormat(true) }
-                    type="text"
+                  <IMaskInput
+                    { ...getMask() }
                     value={ endMask }
-                    onFocus={ (e) => setEndOpen(true) }
+                    onClick={ (e) => setEndOpen(true) }
                     onChange={ (e) => onEnd(e) }
+                    readOnly={ props.readOnly }
                     className="form-control"
                     />
                 </>
@@ -272,7 +330,7 @@ const FieldDate = (props = {}) => {
         ) }
       </div>
 
-      <Overlay target={ startRef.current } show={ startOpen } onHide={ (e) => setStartOpen(false) } placement="bottom-start">
+      <Overlay target={ startRef.current } show={ startOpen } onHide={ (e) => setStartOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
             <DatePicker date={ start } time={ props.field.date !== 'date' } onChange={ (s) => !setStart(s) && setRef(setStartMask, s) } />
@@ -283,7 +341,7 @@ const FieldDate = (props = {}) => {
         </Popover>
       </Overlay>
 
-      <Overlay target={ endRef.current } show={ endOpen } onHide={ (e) => setEndOpen(false) } placement="bottom-start">
+      <Overlay target={ endRef.current } show={ endOpen } onHide={ (e) => setEndOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
             <DatePicker date={ end } time={ props.field.date !== 'date' } onChange={ (s) => !setEnd(s) && setRef(setEndMask, s) } />
@@ -294,7 +352,7 @@ const FieldDate = (props = {}) => {
         </Popover>
       </Overlay>
 
-      <Overlay target={ untilRef.current } show={ untilOpen } onHide={ (e) => setUntilOpen(false) } placement="bottom-start">
+      <Overlay target={ untilRef.current } show={ untilOpen } onHide={ (e) => setUntilOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
             <DatePicker date={ repeat?.until } time={ props.field.date !== 'date' } onChange={ (s) => setRepeat({ ...repeat, until : s }) } />
@@ -330,7 +388,7 @@ const FieldDate = (props = {}) => {
                 <label className="form-label">
                   Until
                 </label>
-                <Form.Control ref={ untilRef } type="text" className="flex-1 ms-2" value={ moment(repeat?.until || end || start).format(getFormat()) } onFocus={ (e) => setUntilOpen(true) } onChange={ (e) => {} } />
+                <Form.Control ref={ untilRef } type="text" className="flex-1 ms-2" value={ moment(repeat?.until || end || start).format(getFormat()) } onClick={ (e) => setUntilOpen(true) } onChange={ (e) => {} } />
               </div>
             ) }
             <div className="d-flex flex-row">
