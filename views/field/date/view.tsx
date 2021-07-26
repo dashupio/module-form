@@ -17,12 +17,16 @@ const FieldDateView = (props = {}) => {
   if (!start) return <div />;
 
   // get format
-  const getFormat = (mask = false) => {
-    // check type
-    if (props.field.date === 'date') return 'MMM D YYYY';
+  const getFormat = () => {
+    // format
+    let format = props.field.format || 'MMM DD YYYY hh:mm a';
+
+    // check format
+    if (props.field.date === 'date') format = 'MMM DD YYYY';
+    if (props.field.date === 'datetime') format = 'MMM DD YYYY hh:mm a';
 
     // return with time
-    return 'MMM D YYYY hh:mm a';
+    return format;
   };
 
   // return text field

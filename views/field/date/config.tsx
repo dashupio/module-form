@@ -77,7 +77,7 @@ const FieldDateConfig = (props = {}) => {
     
       <div className="mb-3">
         <div className="form-check form-switch">
-          <input className="form-check-input" id="enable-repeat" type="chectkbox" onChange={ onRepeat } defaultChecked={ props.field.repeat } />
+          <input className="form-check-input" id="enable-repeat" type="checkbox" onChange={ onRepeat } defaultChecked={ props.field.repeat } />
           <label className="form-check-label" htmlFor="enable-repeat">
             Enable Repeat Values
           </label>

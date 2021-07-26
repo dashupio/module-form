@@ -27,8 +27,9 @@ export default class PhoneField extends Struct {
   get views() {
     // return object of views
     return {
-      view  : 'field/phone/view',
-      input : 'field/phone',
+      view   : 'field/phone/view',
+      input  : 'field/phone',
+      config : 'field/phone/config',
     };
   }
   /**
@@ -128,7 +129,7 @@ export default class PhoneField extends Struct {
    */
   async submitAction(opts, field, value) {
     // parsed
-    const parsed = typeof value === 'string' ? parsePhoneNumber(value, field.country || 'US') : parsePhoneNumber(value.number, value.country || field.country || 'US');
+    const parsed = typeof value === 'string' ? (value.includes('+') ? parsePhoneNumber(value) : parsePhoneNumber(value, field.country || 'US')) : parsePhoneNumber(value.number, value.country || field.country || 'US');
 
     // check parsed
     if (!parsed) return;

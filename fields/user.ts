@@ -186,7 +186,7 @@ export default class UserField extends Struct {
     if (!Array.isArray(value)) value = [value];
 
     // filter out not matching
-    value = value.filter((v) => `${v}`.match(/^[0-9a-fA-F]{24}$/));
+    value = value.map((v) => v?.id || v?._id || v).filter((v) => `${v}`.match(/^[0-9a-fA-F]{24}$/));
 
     // load users
     const users = await Promise.all(value.map((id) => this.loadMember(id, opts)));

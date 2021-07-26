@@ -16,7 +16,7 @@ const FieldWysiwyg = (props = {}) => {
             <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
               <i>Set Label</i>
             </a>
-          ) }  
+          ) }
         </Form.Label>
       ) }
       <Wysiwyg

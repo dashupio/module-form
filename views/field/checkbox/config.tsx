@@ -84,9 +84,24 @@ const FieldCheckboxConfig = (props = {}) => {
     }]);
   };
 
+  // on background
+  const onCompleted = (e) => {
+    // on background
+    props.setField(props.field, 'completed', !!e.target.checked);
+  };
+
   // return text field
   return (
     <>
+      <div className="mb-3">
+        <div className="form-check form-switch">
+          <input className="form-check-input" id="enable-completed" type="checkbox" onChange={ onCompleted } defaultChecked={ props.field.completed } />
+          <label className="form-check-label" htmlFor="enable-completed">
+            Hide Completed Items
+          </label>
+        </div>
+      </div>
+
       <ReactSortable
         list={ options }
         handle=".move"

@@ -18,6 +18,9 @@ const FieldFile = (props = {}) => {
   // useState
   const [values, setValues] = useState(initialValue);
 
+  // new values
+  let newValues = values;
+
   // do upload
   const doUpload = async (value) => {
     // create form data
@@ -43,8 +46,11 @@ const FieldFile = (props = {}) => {
       value.uploaded = (Math.floor(done / total) / 10);
       value.uploaded = value.uploaded === Infinity ? 100 : value.uploaded;
 
+      // new values
+      newValues = [...newValues.filter((v) => v.temp !== value.temp), value];
+
       // set values
-      setValues([...values.filter((v) => v.temp !== value.temp), value]);
+      setValues(newValues);
     });
 
     // await done
@@ -53,7 +59,7 @@ const FieldFile = (props = {}) => {
       const { upload } = JSON.parse(xhr.responseText);
 
       // new values
-      const newValues = [...values.filter((v) => v.temp !== value.temp), upload];
+      newValues = [...newValues.filter((v) => v.temp !== value.temp), upload];
 
       // set values
       setValues(newValues);
@@ -95,8 +101,11 @@ const FieldFile = (props = {}) => {
           'uploaded' : 0
         };
 
+        // values
+        newValues = [...newValues, value];
+
         // set values
-        setValues([...values, value]);
+        setValues(newValues);
 
         // do upload
         doUpload(value);
@@ -110,7 +119,7 @@ const FieldFile = (props = {}) => {
   // on remove
   const onRemove = (item) => {
     // new values
-    const newValues = values.filter((v) => (v.temp && v.temp !== item.temp) || (v.id && v.id !== item.id));
+    newValues = newValues.filter((v) => (v.temp && v.temp !== item.temp) || (v.id && v.id !== item.id));
 
     // set values
     setValues(newValues);
@@ -160,7 +169,7 @@ const FieldFile = (props = {}) => {
               <ProgressBar key={ `progress-${file.id || file.temp}` } now={ file.uploaded } className="my-3" />
             )
           }) }
-          { !values.length && !props.field.multiple && (
+          { !!(!values.length || props.field.multiple) && (
             <input type="file" className="form-control" onChange={ (e) => onUpload(e) } accept={ props.field.accept } multiple={ props.field.multiple } />
           )}
         </>

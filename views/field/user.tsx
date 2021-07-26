@@ -106,7 +106,7 @@ const FieldUser = (props = {}) => {
         readOnly={ props.readOnly }
         onChange={ (e) => props.onChange(props.field, Array.isArray(e) ? e.map((i) => i?.data) : e?.data) }
         components={ { Option } }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+        placeholder={ props.field.placeholder || `Select ${props.field.label}` }
         loadOptions={ loadOptions }
         onInputChange={ (v) => setSearch(v) }
         defaultOptions={ options }

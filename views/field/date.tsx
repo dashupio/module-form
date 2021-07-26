@@ -3,8 +3,8 @@
 import IMask from 'imask';
 import moment from 'moment';
 import { IMaskInput } from 'react-imask';
-import React, { useRef, useState, useEffect } from 'react';
 import { Date as DatePicker, Select } from '@dashup/ui';
+import React, { useRef, useState, useEffect } from 'react';
 import { Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from 'react-bootstrap';
 
 // import date
@@ -16,10 +16,10 @@ const FieldDate = (props = {}) => {
   const value = props.value;
 
   // use state
-  const [end, setEnd] = useState(value?.end ? new Date(prs.value?.end) : null);
+  const [end, setEnd] = useState(value?.end ? new Date(value?.end) : null);
   const [type, setType] = useState(value?.type);
   const [first, setFirst] = useState(true);
-  const [start, setStart] = useState(new Date(value?.start || new Date()));
+  const [start, setStart] = useState(value?.start ? new Date(value?.start) : null);
   const [period, setPeriod] = useState(value?.period);
   const [repeat, setRepeat] = useState(typeof value?.repeat === 'object' ? value?.repeat : null);
   const [amount, setAmount] = useState(value?.amount || 1);
@@ -59,51 +59,124 @@ const FieldDate = (props = {}) => {
       },
     
       blocks : {
+        Q : {
+          to   : 1,
+          mask : IMask.MaskedRange,
+          from : 4,
+
+          placeholderChar : 'Q',
+        },
         YYYY : {
           to   : 2100,
           mask : IMask.MaskedRange,
           from : 1,
+
+          placeholderChar : 'Y',
+        },
+        YY : {
+          to   : 99,
+          mask : IMask.MaskedRange,
+          from : 1,
+
+          placeholderChar : 'Y',
+        },
+        MMMM : {
+          mask : IMask.MaskedEnum,
+          enum : ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
+          placeholderChar : 'M',
+        },
+        MMM : {
+          mask : IMask.MaskedEnum,
+          enum : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
+          placeholderChar : 'M',
         },
         MM : {
           to   : 12,
           mask : IMask.MaskedRange,
           from : 1,
+
+          placeholderChar : 'M',
         },
-        MMM : {
+        M : {
+          to   : 12,
+          mask : IMask.MaskedRange,
+          from : 1,
+
+          placeholderChar : 'M',
+        },
+        dddd : {
           mask : IMask.MaskedEnum,
-          enum : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          enum : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+
+          placeholderChar : 'd',
+        },
+        ddd : {
+          mask : IMask.MaskedEnum,
+          enum : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
+          placeholderChar : 'd',
         },
         DD : {
           to   : 31,
           mask : IMask.MaskedRange,
           from : 1,
+
+          placeholderChar : 'D',
+        },
+        D : {
+          to   : 31,
+          mask : IMask.MaskedRange,
+          from : 1,
+
+          placeholderChar : 'D',
+        },
+        o : {
+          mask : IMask.MaskedEnum,
+          enum : ['st', 'rd', 'nd', 'th'],
+
+          placeholderChar : 's',
         },
         HH : {
           to   : 23,
           mask : IMask.MaskedRange,
           from : 0,
+
+          placeholderChar : 'H',
         },
         hh : {
           to   : 12,
           mask : IMask.MaskedRange,
           from : 1,
+
+          placeholderChar : 'h',
         },
         mm : {
           to   : 59,
           mask : IMask.MaskedRange,
           from : 0,
+
+          placeholderChar : 'm',
         },
         a : {
           mask : IMask.MaskedEnum,
           enum : ['am', 'pm'],
+        },
+        LT : {
+          mask : '00:00 aa',
+        },
+        LTS : {
+          mask : '00:00:00 aa',
         }
       }
     }
   }
 
   // masks
-  const [endMask, setEndMask] = useState(moment(end || start || new Date()).format(getFormat()));
-  const [startMask, setStartMask] = useState(moment(start || new Date()).format(getFormat()));
+  const [endMask, setEndMask] = useState((end || start) ? moment(end || start).format(getFormat()) : '');
+  const [startMask, setStartMask] = useState(start ? moment(start).format(getFormat()) : '');
+  const [untilMask, setUntilMask] = useState(repeat?.until ? moment(repeat.until).format(getFormat()) : '');
 
   // refs
   const endRef = useRef(null);
@@ -134,13 +207,19 @@ const FieldDate = (props = {}) => {
     };
   };
 
+  // clear value
+  const onClear = (e) => {
+    setStart(null);
+    setStartMask('');
+  };
+
   // on start
   const onEnd = (v) => {
-    // set mask
-    setEndMask(v);
-    
     // parsed date
-    const parsedDate = moment(v, getFormat()).toDate();
+    const parsedDate = v instanceof Date ? v : moment(v, getFormat()).toDate();
+
+    // set mask
+    setEndMask(v instanceof Date ? moment(v).format(getFormat()) : v);
 
     // set end
     if (!isNaN(parsedDate.getTime())) {
@@ -150,15 +229,32 @@ const FieldDate = (props = {}) => {
 
   // on start
   const onStart = (v) => {
-    // set mask
-    setStartMask(v);
-    
     // parsed date
-    const parsedDate = moment(v, getFormat()).toDate();
+    const parsedDate = v instanceof Date ? v : moment(v, getFormat()).toDate();
+
+    // set mask
+    setStartMask(v instanceof Date ? moment(v).format(getFormat()) : v);
 
     // set end
     if (!isNaN(parsedDate.getTime())) {
       setStart(parsedDate);
+    }
+  };
+
+  // on start
+  const onUntil = (v) => {
+    // parsed date
+    const parsedDate = v instanceof Date ? v : moment(v, getFormat()).toDate();
+
+    // set mask
+    setUntilMask(v instanceof Date ? moment(v).format(getFormat()) : v);
+
+    // set end
+    if (!isNaN(parsedDate.getTime())) {
+      setRepeat({
+        ...repeat,
+        until : parsedDate,
+      });
     }
   };
 
@@ -186,12 +282,6 @@ const FieldDate = (props = {}) => {
         selected : (repeat?.ends || '').toLowerCase() === ends.toLowerCase(),
       };
     });
-  };
-
-  // set ref
-  const setRef = (fn, date) => {
-    // set value
-    fn(moment(date).format(getFormat()));
   };
 
   // use effect
@@ -226,11 +316,23 @@ const FieldDate = (props = {}) => {
           <IMaskInput
             { ...getMask() }
             value={ startMask }
-            onClick={ (e) => setStartOpen(true) }
+            onClick={ (e) => !setStartOpen(true) && !start && onStart(new Date()) }
             onAccept={ (e) => onStart(e) }
             readOnly={ props.readOnly }
             className="form-control"
             />
+          <OverlayTrigger
+            overlay={
+              <Tooltip>
+                Clear Date
+              </Tooltip>
+            }
+            placement="top"
+          >
+            <Button variant="secondary" onClick={ (e) => onClear(e) }>
+              <i className="fa fa-times fa-fw" />
+            </Button>
+          </OverlayTrigger>
         </InputGroup>
         { props.field.duration && (
           <OverlayTrigger
@@ -266,7 +368,7 @@ const FieldDate = (props = {}) => {
                   <IMaskInput
                     { ...getMask() }
                     value={ endMask }
-                    onClick={ (e) => setEndOpen(true) }
+                    onClick={ (e) => !setEndOpen(true) && !end && onStart(start || new Date()) }
                     onChange={ (e) => onEnd(e) }
                     readOnly={ props.readOnly }
                     className="form-control"
@@ -276,7 +378,7 @@ const FieldDate = (props = {}) => {
               { type === 'lasting' && (
                 <>
                   <InputGroup.Text>
-                    Lasting
+                    For
                   </InputGroup.Text>
                   <Form.Control ref={ endRef } type="number" value={ amount } onChange={ (e) => setAmount(parseInt(e.target.value)) } />
                   <DropdownButton
@@ -333,7 +435,7 @@ const FieldDate = (props = {}) => {
       <Overlay target={ startRef.current } show={ startOpen } onHide={ (e) => setStartOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
-            <DatePicker date={ start } time={ props.field.date !== 'date' } onChange={ (s) => !setStart(s) && setRef(setStartMask, s) } />
+            <DatePicker date={ start } time={ props.field.date !== 'date' } onChange={ (s) => onStart(s) } />
             <button className="btn btn-primary w-100 mt-3" onClick={ (e) => !setStartOpen(false) && !e.preventDefault() && e.stopPropagation() }>
               Confirm
             </button>
@@ -344,7 +446,7 @@ const FieldDate = (props = {}) => {
       <Overlay target={ endRef.current } show={ endOpen } onHide={ (e) => setEndOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
-            <DatePicker date={ end } time={ props.field.date !== 'date' } onChange={ (s) => !setEnd(s) && setRef(setEndMask, s) } />
+            <DatePicker date={ end } time={ props.field.date !== 'date' } onChange={ (e) => onEnd(e) } />
             <button className="btn btn-primary w-100 mt-3" onClick={ (e) => !setEndOpen(false) && !e.preventDefault() && e.stopPropagation() }>
               Confirm
             </button>
@@ -355,7 +457,7 @@ const FieldDate = (props = {}) => {
       <Overlay target={ untilRef.current } show={ untilOpen } onHide={ (e) => setUntilOpen(false) } placement="bottom-start" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
-            <DatePicker date={ repeat?.until } time={ props.field.date !== 'date' } onChange={ (s) => setRepeat({ ...repeat, until : s }) } />
+            <DatePicker date={ repeat?.until } time={ props.field.date !== 'date' } onChange={ (u) => onUntil(u) } />
             <button className="btn btn-primary w-100 mt-3" onClick={ (e) => !setUntilOpen(false) && !e.preventDefault() && e.stopPropagation() }>
               Confirm
             </button>
@@ -363,7 +465,7 @@ const FieldDate = (props = {}) => {
         </Popover>
       </Overlay>
 
-      <Overlay target={ repeatRef.current } show={ repeatOpen } onHide={ (e) => setRepeatOpen(false) } placement="bottom-end">
+      <Overlay target={ repeatRef.current } show={ repeatOpen } onHide={ (e) => setRepeatOpen(false) } placement="bottom-end" rootClose>
         <Popover className="popover-date">
           <div className="p-2">
             <div className="mb-3">
@@ -384,11 +486,18 @@ const FieldDate = (props = {}) => {
               <Select options={ getEnds() } defaultValue={ getEnds().filter((f) => f.selected) } onChange={ (val) => setRepeat({ ...repeat, ends : val?.value }) } isClearable />
             </div>
             { repeat?.ends === 'until' && (
-              <div className="mb-3">
+              <div className="mb-3" ref={ untilRef }>
                 <label className="form-label">
                   Until
                 </label>
-                <Form.Control ref={ untilRef } type="text" className="flex-1 ms-2" value={ moment(repeat?.until || end || start).format(getFormat()) } onClick={ (e) => setUntilOpen(true) } onChange={ (e) => {} } />
+                <IMaskInput
+                  { ...getMask() }
+                  value={ untilMask }
+                  onClick={ (e) => !setUntilOpen(true) && !repeat?.until && onUntil(end || start || new Date()) }
+                  onChange={ (e) => onUntil(e) }
+                  readOnly={ props.readOnly }
+                  className="form-control"
+                  />
               </div>
             ) }
             <div className="d-flex flex-row">

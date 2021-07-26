@@ -54,14 +54,14 @@ const FieldPhone = (props = {}) => {
       ) }
       <ReactPhoneInput
         value={ value?.number }
-        inputExtraProps={{
+        country={ props.field.country }
+        inputExtraProps={ {
           name      : 'phone',
           required  : props.field.required,
           autoFocus : true
-        }}
+        } }
         onChange={ (val) => onChange(`+${val}`) }
         readOnly={ props.readOnly }
-        defaultCountry={ value?.country || props.field.country || 'us' }
       />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">

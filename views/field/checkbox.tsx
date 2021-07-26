@@ -19,6 +19,10 @@ const FieldCheckbox = (props = {}) => {
         </Form.Label>
       ) }
       { (props.field.options || []).map((option, i) => {
+
+        // hide completed
+        if (props.field.completed && (props.value || []).includes(option.value)) return null;
+        
         // return jsx
         return (
           <Form.Check

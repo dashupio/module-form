@@ -2,8 +2,10 @@
 // import react
 import { Form } from '@dashup/ui';
 import { Button } from 'react-bootstrap';
-import ReactPerfectScrollbar from 'react-perfect-scrollbar';
+import SimpleBar from 'simplebar-react';
 import React, { useState, useEffect } from 'react';
+
+  console.log('test', SimpleBar);
 
 // block list
 const BlockForm = (props = {}) => {
@@ -118,7 +120,7 @@ const BlockForm = (props = {}) => {
           <b>{ props.block.name }</b>
         </div>
       ) }
-      <ReactPerfectScrollbar className={ `${props.block.background ? 'card-body' : 'flex-1'} p-relative` }>
+      <SimpleBar className={ `${props.block.background ? 'card-body' : 'flex-1'} p-relative` }>
         { loading ? (
           <div className="w-100 h-100 d-flex align-items-center">
             <i className="fa fa-spinner fa-spin h1 m-auto" />
@@ -140,7 +142,7 @@ const BlockForm = (props = {}) => {
               />
           </div>
         ) }
-      </ReactPerfectScrollbar>
+      </SimpleBar>
       { !!getForms() && !!getForms().length && (
         <div className={ `d-flex justify-content-end ${props.block.background ? 'card-footer' : 'mt-2'}` }>
           { loading === 'submit' ? (

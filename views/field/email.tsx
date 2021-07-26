@@ -1,10 +1,18 @@
 
 // import dependencies
-import React from 'react';
 import { Form } from 'react-bootstrap';
+import validator from 'email-validator';
+import React, { useState } from 'react';
 
 // text field
 const FieldEmail = (props = {}) => {
+  // state
+  const [valid, setValid] = useState(null);
+
+  // is valid
+  const isValid = (val = props.value) => {
+    return validator.validate(val || '');
+  };
 
   // return text field
   return (
@@ -20,8 +28,11 @@ const FieldEmail = (props = {}) => {
       ) }
       <Form.Control
         type="email"
+        onBlur={ (e) => setValid(isValid(e.target.value)) }
+        isValid={ valid === true }
         onChange={ (e) => props.onChange(props.field, e.target.value) }
         readOnly={ props.readOnly }
+        isInvalid={ valid === false }
         placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
         defaultValue={ props.value }
         />
