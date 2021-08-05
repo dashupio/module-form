@@ -13,7 +13,7 @@ const FieldTeam = (props = {}) => {
   // get short name
   const getName = (team) => {
     // get name
-    const name = `${team.name || ''}`.trim() || 'N A';
+    const name = `${team?.name || ''}`.trim() || 'N A';
 
     // return name
     return `${(name.split(' ')[0] || '')[0] || ''}${(name.split(' ')[1] || '')[0] || ''}`;

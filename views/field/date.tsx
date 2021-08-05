@@ -60,114 +60,146 @@ const FieldDate = (props = {}) => {
     
       blocks : {
         Q : {
-          to   : 1,
-          mask : IMask.MaskedRange,
-          from : 4,
+          to        : 1,
+          mask      : IMask.MaskedRange,
+          from      : 4,
+          autofix   : true,
+          maxLength : 1,
 
           placeholderChar : 'Q',
         },
         YYYY : {
-          to   : 2100,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 2100,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 4,
 
           placeholderChar : 'Y',
         },
         YY : {
-          to   : 99,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 99,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'Y',
         },
         MMMM : {
-          mask : IMask.MaskedEnum,
-          enum : ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          mask      : IMask.MaskedEnum,
+          enum      : ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          autofix   : true,
+          maxLength : 9,
 
           placeholderChar : 'M',
         },
         MMM : {
-          mask : IMask.MaskedEnum,
-          enum : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          mask      : IMask.MaskedEnum,
+          enum      : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          autofix   : true,
+          maxLength : 3,
 
           placeholderChar : 'M',
         },
         MM : {
-          to   : 12,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 12,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'M',
         },
         M : {
-          to   : 12,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 12,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'M',
         },
         dddd : {
-          mask : IMask.MaskedEnum,
-          enum : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          mask      : IMask.MaskedEnum,
+          enum      : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          autofix   : true,
+          maxLength : 9,
 
           placeholderChar : 'd',
         },
         ddd : {
-          mask : IMask.MaskedEnum,
-          enum : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          mask      : IMask.MaskedEnum,
+          enum      : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          autofix   : true,
+          maxLength : 3,
 
           placeholderChar : 'd',
         },
         DD : {
-          to   : 31,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 31,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'D',
         },
         D : {
-          to   : 31,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 31,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'D',
         },
         o : {
-          mask : IMask.MaskedEnum,
-          enum : ['st', 'rd', 'nd', 'th'],
+          mask      : IMask.MaskedEnum,
+          enum      : ['st', 'rd', 'nd', 'th'],
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 's',
         },
         HH : {
-          to   : 23,
-          mask : IMask.MaskedRange,
-          from : 0,
+          to        : 23,
+          mask      : IMask.MaskedRange,
+          from      : 0,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'H',
         },
         hh : {
-          to   : 12,
-          mask : IMask.MaskedRange,
-          from : 1,
+          to        : 12,
+          mask      : IMask.MaskedRange,
+          from      : 1,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'h',
         },
         mm : {
-          to   : 59,
-          mask : IMask.MaskedRange,
-          from : 0,
+          to        : 59,
+          mask      : IMask.MaskedRange,
+          from      : 0,
+          autofix   : true,
+          maxLength : 2,
 
           placeholderChar : 'm',
         },
         a : {
-          mask : IMask.MaskedEnum,
-          enum : ['am', 'pm'],
-        },
-        LT : {
-          mask : '00:00 aa',
+          mask      : IMask.MaskedEnum,
+          enum      : ['am', 'pm'],
+          autofix   : true,
+          maxLength : 2,
         },
         LTS : {
           mask : '00:00:00 aa',
+        },
+        LT : {
+          mask : '00:00 aa',
         }
       }
     }

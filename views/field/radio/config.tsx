@@ -31,7 +31,13 @@ const FieldRadioConfig = (props = {}) => {
   const [color, setColor] = useState(null);
   const [option, setOption] = useState(false);
   const [updated, setUpdated] = useState(new Date());
-  const [options, setStateOptions] = useState(props.field.options || []);
+  const [options, setStateOptions] = useState((props.field.options || []).map((o) => {
+    // check option
+    if (!o.uuid) o.uuid = shortid();
+
+    // set option
+    return o;
+  }));
 
   // set options
   const setOptions = (opts) => {
@@ -95,7 +101,7 @@ const FieldRadioConfig = (props = {}) => {
         { (options || []).map((option, i) => {
           // return jsx
           return (
-            <div key={ `option-${option.uuid || `${option.value}-${i}` }` } className="mb-3">
+            <div key={ `option-${option.uuid}` } className="mb-3">
               <label className="form-label">
                 Option #{ i + 1 }
               </label>

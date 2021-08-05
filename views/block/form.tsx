@@ -5,8 +5,6 @@ import { Button } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
 import React, { useState, useEffect } from 'react';
 
-  console.log('test', SimpleBar);
-
 // block list
 const BlockForm = (props = {}) => {
   // use state

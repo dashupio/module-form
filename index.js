@@ -24,6 +24,7 @@ const BooleanField = require('./fields/boolean');
 const WysiwygField = require('./fields/wysiwyg');
 const TextareaField = require('./fields/textarea');
 const CheckboxField = require('./fields/checkbox');
+const SignatureField = require('./fields/signature');
 
 /**
  * export module
@@ -62,6 +63,7 @@ class FormModule extends Module {
     fn('field', EncryptField);
     fn('field', CheckboxField);
     fn('field', TextareaField);
+    fn('field', SignatureField);
   }
 }
 

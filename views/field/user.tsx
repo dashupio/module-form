@@ -13,7 +13,7 @@ const FieldUser = (props = {}) => {
   // get short name
   const getName = (user) => {
     // get name
-    const name = `${user.name || ''}`.trim() || 'N A';
+    const name = `${user?.name || ''}`.trim() || 'N A';
 
     // return name
     return `${(name.split(' ')[0] || '')[0] || ''}${(name.split(' ')[1] || '')[0] || ''}`;

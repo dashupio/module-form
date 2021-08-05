@@ -29,7 +29,7 @@ const debounce = (func, timeout = 1000) => {
 // code
 const Code = (props = {}) => {
   // content
-  const contentBlock = htmlToDraft(props.value || '');
+  const contentBlock = htmlToDraft(`${props.value || ''}`);
 
   // let editor state
   let editorState;
