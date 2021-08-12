@@ -70,6 +70,14 @@ export default class ImageField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-image';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Image';

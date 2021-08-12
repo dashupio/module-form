@@ -68,6 +68,14 @@ export default class FieldEncrypt extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-unlock';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Encrypt';

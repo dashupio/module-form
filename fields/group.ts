@@ -62,6 +62,14 @@ export default class GroupField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-object-group';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Group';

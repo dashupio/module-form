@@ -70,6 +70,14 @@ export default class UserField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-user';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'User';

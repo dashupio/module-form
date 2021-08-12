@@ -61,6 +61,14 @@ export default class AddressField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-map-marked-alt';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Address';

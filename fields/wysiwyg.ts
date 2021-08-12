@@ -62,6 +62,14 @@ export default class WysiwygField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-paragraph';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Wysiwyg';

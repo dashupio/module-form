@@ -62,6 +62,14 @@ export default class SelectField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-ballot-check';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Select';

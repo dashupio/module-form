@@ -61,6 +61,14 @@ export default class EmailField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-envelope-open';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Email';

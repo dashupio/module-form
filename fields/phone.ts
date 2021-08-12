@@ -99,6 +99,14 @@ export default class PhoneField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-phone';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Phone';

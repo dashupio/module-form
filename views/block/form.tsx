@@ -104,8 +104,6 @@ const BlockForm = (props = {}) => {
       ...actualData,
     });
 
-    console.log(result);
-
     // submitting
     setSubmitting(false);
   };
@@ -143,7 +141,7 @@ const BlockForm = (props = {}) => {
       </SimpleBar>
       { !!getForms() && !!getForms().length && (
         <div className={ `d-flex justify-content-end ${props.block.background ? 'card-footer' : 'mt-2'}` }>
-          { loading === 'submit' ? (
+          { submitting ? (
             <Button variant="success" disabled>
               { props.item ? 'Updating...' : 'Submitting...' }
             </Button>

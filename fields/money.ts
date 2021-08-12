@@ -61,6 +61,14 @@ export default class MoneyField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-money-bill';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Money';

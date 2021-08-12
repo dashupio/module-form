@@ -61,6 +61,14 @@ export default class TextareaField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-text-height';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Textarea';

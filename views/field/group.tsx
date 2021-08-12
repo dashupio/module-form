@@ -45,7 +45,7 @@ const FieldGroup = (props = {}) => {
     value[i] = data;
 
     // set to parent
-    props.onChange(props.field, value);
+    props.onChange(props.field, Array.from(value));
   };
 
   // return text field

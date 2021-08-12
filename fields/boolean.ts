@@ -64,6 +64,14 @@ export default class BooleanField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-check';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Boolean';

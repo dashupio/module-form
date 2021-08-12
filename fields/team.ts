@@ -69,6 +69,14 @@ export default class TeamField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-users';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Team';

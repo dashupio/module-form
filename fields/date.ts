@@ -87,6 +87,14 @@ export default class DateField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-calendar-day';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Date';

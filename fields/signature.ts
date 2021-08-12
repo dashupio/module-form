@@ -60,6 +60,14 @@ export default class SignatureField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-signature';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Signature';

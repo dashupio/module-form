@@ -61,6 +61,14 @@ export default class CheckboxField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-check-square';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Checkbox';

@@ -61,6 +61,14 @@ export default class NumberField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-tally';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'Number';

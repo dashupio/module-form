@@ -70,6 +70,14 @@ export default class FileField extends Struct {
   /**
    * returns field type
    */
+  get icon() {
+    // return field type label
+    return 'fa fa-file-search';
+  }
+
+  /**
+   * returns field type
+   */
   get title() {
     // return field type label
     return 'File';
