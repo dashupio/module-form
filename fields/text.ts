@@ -63,7 +63,7 @@ export default class TextField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-text';
+    return 'fad fa-text';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class TextField extends Struct {
    */
   get description() {
     // return description string
-    return 'Text Field';
+    return 'Single line Text Field';
   }
 }

@@ -64,7 +64,7 @@ export default class GroupField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-object-group';
+    return 'fad fa-object-group';
   }
 
   /**
@@ -88,6 +88,6 @@ export default class GroupField extends Struct {
    */
   get description() {
     // return description string
-    return 'Group Field';
+    return 'Group of Fields';
   }
 }

@@ -20,7 +20,7 @@ export default class FormBlock extends Struct {
    */
   get icon() {
     // return page type label
-    return 'fa fa-ballot-check';
+    return 'fad fa-ballot-check';
   }
 
   /**
@@ -28,7 +28,7 @@ export default class FormBlock extends Struct {
    */
   get title() {
     // return page type label
-    return 'Form Block';
+    return 'Form';
   }
 
   /**
@@ -63,6 +63,6 @@ export default class FormBlock extends Struct {
    */
   get description() {
     // return description string
-    return 'Create a form card';
+    return 'Customizable Form Block';
   }
 }

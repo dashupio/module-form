@@ -66,7 +66,7 @@ export default class BooleanField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-check';
+    return 'fad fa-check';
   }
 
   /**
@@ -90,7 +90,7 @@ export default class BooleanField extends Struct {
    */
   get description() {
     // return description string
-    return 'Boolean Field';
+    return 'True or False';
   }
 
   /**

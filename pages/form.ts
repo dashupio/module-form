@@ -34,7 +34,7 @@ export default class FormPage extends Struct {
    */
   get icon() {
     // return page type label
-    return 'fa fa-ballot-check';
+    return 'fad fa-ballot-check text-info';
   }
 
   /**
@@ -42,7 +42,7 @@ export default class FormPage extends Struct {
    */
   get title() {
     // return page type label
-    return 'Form Page';
+    return 'Form';
   }
 
   /**
@@ -104,7 +104,7 @@ export default class FormPage extends Struct {
    */
   get categories() {
     // return array of categories
-    return ['Form'];
+    return ['View'];
   }
 
   /**
@@ -112,7 +112,7 @@ export default class FormPage extends Struct {
    */
   get description() {
     // return description string
-    return 'Embeddable Form page';
+    return 'Customizable Form builder';
   }
 
   /**

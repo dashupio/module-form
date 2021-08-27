@@ -63,7 +63,7 @@ export default class MoneyField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-money-bill';
+    return 'fad fa-money-bill';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class MoneyField extends Struct {
    */
   get description() {
     // return description string
-    return 'Money Field';
+    return 'Currency Field';
   }
 }

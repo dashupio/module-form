@@ -72,7 +72,7 @@ export default class ImageField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-image';
+    return 'fad fa-image';
   }
 
   /**
@@ -96,7 +96,7 @@ export default class ImageField extends Struct {
    */
   get description() {
     // return description string
-    return 'Image Field';
+    return 'Image Upload';
   }
 
   /**

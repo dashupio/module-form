@@ -63,7 +63,7 @@ export default class EmailField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-envelope-open';
+    return 'fad fa-envelope-open';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class EmailField extends Struct {
    */
   get description() {
     // return description string
-    return 'Email Field';
+    return 'Verifiable Email Field';
   }
 }

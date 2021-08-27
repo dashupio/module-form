@@ -64,7 +64,7 @@ export default class SelectField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-ballot-check';
+    return 'fad fa-ballot-check';
   }
 
   /**
@@ -88,6 +88,6 @@ export default class SelectField extends Struct {
    */
   get description() {
     // return description string
-    return 'Select Field';
+    return 'Single or Multiple Select';
   }
 }

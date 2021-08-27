@@ -63,7 +63,7 @@ export default class NumberField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-tally';
+    return 'fad fa-tally';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class NumberField extends Struct {
    */
   get description() {
     // return description string
-    return 'Number Field';
+    return 'Numeric Field';
   }
 }

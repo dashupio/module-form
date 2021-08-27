@@ -63,7 +63,7 @@ export default class CheckboxField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-check-square';
+    return 'fad fa-check-square';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class CheckboxField extends Struct {
    */
   get description() {
     // return description string
-    return 'Checkbox Field';
+    return 'List of Checkbox Options';
   }
 }

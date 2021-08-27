@@ -112,8 +112,9 @@ const FieldSelect = (props = {}) => {
         components={ {
           Option,
         } }
+        menuIsOpen={ props.menuIsOpen }
         placeholder={ props.field.placeholder || `Select ${props.field.label}` }
-        menuPortalTarget={ document.body }
+        menuPortalTarget={ props.menuPortalTarget }
         />
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">

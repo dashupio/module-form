@@ -62,7 +62,7 @@ export default class SignatureField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-signature';
+    return 'fad fa-signature';
   }
 
   /**
@@ -86,6 +86,6 @@ export default class SignatureField extends Struct {
    */
   get description() {
     // return description string
-    return 'Signature Field';
+    return 'Drawable Signature';
   }
 }

@@ -64,7 +64,7 @@ export default class WysiwygField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-paragraph';
+    return 'fad fa-paragraph';
   }
 
   /**
@@ -72,7 +72,7 @@ export default class WysiwygField extends Struct {
    */
   get title() {
     // return field type label
-    return 'Wysiwyg';
+    return 'Wysiwyg Entry';
   }
 
   /**

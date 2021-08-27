@@ -72,7 +72,7 @@ export default class UserField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-user';
+    return 'fad fa-user';
   }
 
   /**
@@ -96,7 +96,7 @@ export default class UserField extends Struct {
    */
   get description() {
     // return description string
-    return 'User Field';
+    return 'Dashup User Select';
   }
 
   /**

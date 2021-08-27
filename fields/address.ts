@@ -63,7 +63,7 @@ export default class AddressField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-map-marked-alt';
+    return 'fad fa-map-marked-alt';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class AddressField extends Struct {
    */
   get description() {
     // return description string
-    return 'Address Field';
+    return 'Searchable Address';
   }
 }

@@ -70,7 +70,7 @@ export default class FieldEncrypt extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-unlock';
+    return 'fad fa-unlock';
   }
 
   /**
@@ -94,7 +94,7 @@ export default class FieldEncrypt extends Struct {
    */
   get description() {
     // return description string
-    return 'Encrypt Field';
+    return 'Encrypted Password';
   }
 
   /**

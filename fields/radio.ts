@@ -63,7 +63,7 @@ export default class RadioField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-check-circle';
+    return 'fad fa-check-circle';
   }
 
   /**
@@ -71,7 +71,7 @@ export default class RadioField extends Struct {
    */
   get title() {
     // return field type label
-    return 'Radio';
+    return 'List of Radio Options';
   }
 
   /**

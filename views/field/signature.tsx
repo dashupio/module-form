@@ -11,7 +11,11 @@ const FieldSignature = (props = {}) => {
   const signatureRef = useRef(null);
 
   // on change
-  const onClear = () => {
+  const onClear = (e) => {
+    // prevent
+    e.preventDefault();
+    e.stopPropagation();
+    
     // get data
     props.onChange(props.field, null);
     signatureRef.current?.clear();
@@ -54,6 +58,9 @@ const FieldSignature = (props = {}) => {
           penColor="#000"
           canvasProps={
             {
+              style : {
+                backgroundColor : 'rgba(0,0,0,0.15)',
+              },
               width     : 250,
               height    : 100,
               className : 'sig-canvas rounded',

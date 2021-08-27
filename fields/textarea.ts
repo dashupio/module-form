@@ -63,7 +63,7 @@ export default class TextareaField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-text-height';
+    return 'fad fa-text-height';
   }
 
   /**
@@ -87,6 +87,6 @@ export default class TextareaField extends Struct {
    */
   get description() {
     // return description string
-    return 'Textarea Field';
+    return 'Multi line Text Field';
   }
 }

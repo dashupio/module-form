@@ -72,7 +72,7 @@ export default class FileField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-file-search';
+    return 'fad fa-file-search';
   }
 
   /**
@@ -96,7 +96,7 @@ export default class FileField extends Struct {
    */
   get description() {
     // return description string
-    return 'File Field';
+    return 'File Upload';
   }
 
   /**

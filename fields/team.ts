@@ -71,7 +71,7 @@ export default class TeamField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-users';
+    return 'fad fa-users';
   }
 
   /**
@@ -95,7 +95,7 @@ export default class TeamField extends Struct {
    */
   get description() {
     // return description string
-    return 'Team Field';
+    return 'Dashup Team Select';
   }
 
   /**

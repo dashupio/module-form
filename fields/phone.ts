@@ -101,7 +101,7 @@ export default class PhoneField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-phone';
+    return 'fad fa-phone';
   }
 
   /**
@@ -125,7 +125,7 @@ export default class PhoneField extends Struct {
    */
   get description() {
     // return description string
-    return 'Phone Field';
+    return 'Verifiable Phone Entry';
   }
 
   /**

@@ -89,7 +89,7 @@ export default class DateField extends Struct {
    */
   get icon() {
     // return field type label
-    return 'fa fa-calendar-day';
+    return 'fad fa-calendar-day';
   }
 
   /**
@@ -113,7 +113,7 @@ export default class DateField extends Struct {
    */
   get description() {
     // return description string
-    return 'Date Field';
+    return 'Date, Time, or Duration';
   }
 
   /**
