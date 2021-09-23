@@ -1,7 +1,6 @@
 
 // import dependencies
-import { Form } from 'react-bootstrap';
-import { Form as DUForm } from '@dashup/ui';
+import { Form } from '@dashup/ui';
 import React, { useState } from 'react';
 
 // clors
@@ -80,7 +79,7 @@ const FieldGroup = (props = {}) => {
             ) }
 
             <div className="card-body pb-0">
-              <DUForm
+              <Form
                 { ...props }
 
                 id={ props.page.get('_id') }

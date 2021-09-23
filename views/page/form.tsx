@@ -1,7 +1,6 @@
 
 // import dependencies
-import { Button } from 'react-bootstrap';
-import { Page, Form } from '@dashup/ui';
+import { Button, Page, Form } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // create model page

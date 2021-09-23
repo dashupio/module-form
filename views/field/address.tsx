@@ -1,6 +1,6 @@
 
 // import dependencies
-import { Form, Dropdown } from 'react-bootstrap';
+import { Form, Dropdown } from '@dashup/ui';
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
 

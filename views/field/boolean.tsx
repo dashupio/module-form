@@ -1,8 +1,7 @@
 
 // import dependencies
 import React from 'react';
-import { Form } from 'react-bootstrap';
-import { Select } from '@dashup/ui';
+import { Form, Select } from '@dashup/ui';
 
 // text field
 const FieldBoolean = (props = {}) => {

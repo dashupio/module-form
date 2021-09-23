@@ -1,7 +1,7 @@
 
 // import dependencies
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form } from '@dashup/ui';
 import ReactPhoneInput from 'react-phone-input-2';
 import parsePhoneNumber from 'libphonenumber-js';
 

@@ -1,8 +1,7 @@
 
 // import dependencies
 import shortid from 'shortid';
-import { Color } from '@dashup/ui';
-import { Button } from 'react-bootstrap';
+import { Color, Button } from '@dashup/ui';
 import { ReactSortable } from 'react-sortablejs';
 import React, { useState } from 'react';
 

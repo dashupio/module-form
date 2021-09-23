@@ -1,8 +1,7 @@
 
 // import react
-import { Form } from '@dashup/ui';
-import { Button } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
+import { Form, Button } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // block list

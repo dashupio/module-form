@@ -1,7 +1,7 @@
 
 // import dependencies
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form } from '@dashup/ui';
 
 // text field
 const FieldCheckbox = (props = {}) => {

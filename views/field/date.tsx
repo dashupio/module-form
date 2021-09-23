@@ -3,9 +3,8 @@
 import IMask from 'imask';
 import moment from 'moment';
 import { IMaskInput } from 'react-imask';
-import { Date as DatePicker, Select } from '@dashup/ui';
 import React, { useRef, useState, useEffect } from 'react';
-import { Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Date as DatePicker, Select, Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from '@dashup/ui';
 
 // import date
 import './date.scss';

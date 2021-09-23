@@ -1,6 +1,6 @@
 
 // import dependencies
-import { Form } from 'react-bootstrap';
+import { Form } from '@dashup/ui';
 import validator from 'email-validator';
 import React, { useState } from 'react';
 

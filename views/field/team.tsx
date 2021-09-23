@@ -1,7 +1,6 @@
 
 // import dependencies
-import { Select } from '@dashup/ui';
-import { Form, Dropdown } from 'react-bootstrap';
+import { Select, Form, Dropdown } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // text field

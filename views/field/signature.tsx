@@ -1,6 +1,6 @@
 
 // import dependencies
-import { Form } from 'react-bootstrap';
+import { Form } from '@dashup/ui';
 import SignatureCanvas from 'react-signature-canvas';
 import React, { useRef, useEffect } from 'react';
 

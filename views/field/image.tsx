@@ -3,7 +3,7 @@
 import dotProp from 'dot-prop';
 import { v4 as uuid } from 'uuid';
 import React, { useState } from 'react';
-import { Form, ProgressBar } from 'react-bootstrap';
+import { Form, ProgressBar } from '@dashup/ui';
 
 // scss
 import './upload.scss';
