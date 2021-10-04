@@ -1,7 +1,7 @@
 
 // import react
 import React from 'react';
-import { Select } from '@dashup/ui';
+import { TextField, MenuItem } from '@dashup/ui';
 
 // create page model config
 const PageFormConfig = (props = {}) => {
@@ -20,29 +20,29 @@ const PageFormConfig = (props = {}) => {
       return {
         value : model.get('_id'),
         label : model.get('name'),
-
-        selected : (props.page.get('data.model') || []).includes(model.get('_id')),
       };
     });
   };
 
-  // on forms
-  const onModel = (value) => {
-    // set data
-    props.setData('model', value?.value);
-  };
-
   // return jsx
   return (
-    <div className="mb-3">
-      <label className="form-label">
-        Choose Model
-      </label>
-      <Select options={ getModels() } defaultValue={ getModels().filter((f) => f.selected) } onChange={ onModel } isClearable />
-      <small>
-        View Dashboards with this grids items.
-      </small>
-    </div>
+    <TextField
+      size="sm"
+      label="Choose Model"
+      value={ props.page.get('data.model') }
+      select
+      margin="dense"
+      variant="outlined"
+      onChange={ (e) => props.setData(e.target.value) }
+      fullWidth
+      helperText="The model this form will submit to."
+    >
+      { getModels().map((option) => (
+        <MenuItem key={ option.value } value={ option.value }>
+          { option.label }
+        </MenuItem>
+      ))}
+    </TextField>
   )
 };
 

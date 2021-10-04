@@ -1,8 +1,8 @@
 
 // import dependencies
-import { Form } from '@dashup/ui';
 import validator from 'email-validator';
 import React, { useState } from 'react';
+import { Icon, TextField, InputAdornment } from '@dashup/ui';
 
 // text field
 const FieldEmail = (props = {}) => {
@@ -16,32 +16,27 @@ const FieldEmail = (props = {}) => {
 
   // return text field
   return (
-    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
-      { !props.noLabel && (
-        <Form.Label>
-          { props.field.label || (
-            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
-              <i>Set Label</i>
-            </a>
-          ) }  
-        </Form.Label>
-      ) }
-      <Form.Control
-        type="email"
-        onBlur={ (e) => setValid(isValid(e.target.value)) }
-        isValid={ valid === true }
-        onChange={ (e) => props.onChange(props.field, e.target.value) }
-        readOnly={ props.readOnly }
-        isInvalid={ valid === false }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
-        />
-      { !!props.field.help && !props.noLabel && (
-        <Form.Text className="form-help">
-          { props.field.help }
-        </Form.Text>
-      ) }
-    </Form.Group>
+    <TextField
+      type="email"
+      label={ props.field.label }
+     
+     
+      readOnly={ props.readOnly }
+      onChange={ (e) => props.onChange(props.field, e.target.value) }
+      fullWidth
+      helperText={ props.field.help }
+      InputProps={ {
+        startAdornment : (
+          <InputAdornment position="start">
+            <Icon>
+              <i className="fa fa-envelope-open" />
+            </Icon>
+          </InputAdornment>
+        )
+      } }
+      placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+      defaultValue={ props.value }
+    />
   );
 };
 

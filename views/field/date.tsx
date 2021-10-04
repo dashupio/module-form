@@ -5,6 +5,7 @@ import moment from 'moment';
 import { IMaskInput } from 'react-imask';
 import React, { useRef, useState, useEffect } from 'react';
 import { Date as DatePicker, Select, Form, Overlay, Popover, Button, InputGroup, OverlayTrigger, Tooltip, Dropdown, DropdownButton } from '@dashup/ui';
+import { Box, TextField, MenuItem, DateTimePicker, AdapterMoment, LocalizationProvider, Dialog, DialogTitle, DialogActions, DialogContent } from '@dashup/ui';
 
 // import date
 import './date.scss';
@@ -22,6 +23,7 @@ const FieldDate = (props = {}) => {
   const [period, setPeriod] = useState(value?.period);
   const [repeat, setRepeat] = useState(typeof value?.repeat === 'object' ? value?.repeat : null);
   const [amount, setAmount] = useState(value?.amount || 1);
+  const [repeats, setRepeats] = useState('never');
   const [endOpen, setEndOpen] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [untilOpen, setUntilOpen] = useState(false);
@@ -303,14 +305,13 @@ const FieldDate = (props = {}) => {
   };
 
   // get ends
-  const getEnds = () => {
+  const getRepeats = () => {
     // return triggers
-    return ['Forever', 'Until'].map((ends) => {
+    return ['Never', 'Daily', 'Weekly', 'Monthly', 'Custom'].map((type) => {
       // return object
       return {
-        label    : ends,
-        value    : ends.toLowerCase(),
-        selected : (repeat?.ends || '').toLowerCase() === ends.toLowerCase(),
+        label : type,
+        value : type.toLowerCase(),
       };
     });
   };
@@ -325,6 +326,116 @@ const FieldDate = (props = {}) => {
   }, [JSON.stringify(getValue())]);
 
   // return text field
+  return (
+    <LocalizationProvider dateAdapter={ AdapterMoment }>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        { /* START DATE */ }
+        <DateTimePicker
+          label={ `${props.field.label}${props.field.duration ? ' Start' : ''}` }
+          value={ start }
+          format={ getFormat() }
+          onChange={ (val) => setStart(val) }
+          renderInput={ (params) => (
+            <TextField
+              { ...params }
+             
+             
+              readOnly={ props.readOnly }
+              fullWidth
+              placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+            />
+          ) }
+        />
+        { /* END DATE */ }
+        { props.field.duration && (
+          <>
+            <Box sx={ { pl : 1, pr : 1 } }>
+              to
+            </Box>
+            <DateTimePicker
+              label={ `${props.field.label} End` }
+              value={ end }
+              onChange={ (val) => setEnd(val) }
+              renderInput={ (params) => (
+                <TextField
+                  { ...params }
+                 
+                 
+                  readOnly={ props.readOnly }
+                  fullWidth
+                  placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+                />
+              ) }
+            />
+          </>
+        ) }
+        { props.field.repeat && (
+          <Box sx={ { pl : 1, width : '25ch' } }>
+            <TextField
+              select
+              label="Repeats"
+              value={ repeats }
+             
+             
+              onChange={ (e) => !setRepeats(e.target.value) && e.target.value === 'custom' ? setRepeatOpen(true) : null }
+              fullWidth
+            >
+              { getRepeats().map((option) => (
+                <MenuItem key={ option.value } value={ option.value }>
+                  { option.label }
+                </MenuItem>
+              ))}
+            </TextField>
+            <Dialog open={ repeatOpen } onClose={ () => setRepeatOpen(false) }>
+              <DialogTitle>
+                Custom Repeat
+              </DialogTitle>
+              <DialogContent>
+                <Box sx={ { pb : 1, whiteSpace : 'nowrap' } }>
+                  Repeat every
+                </Box>
+                <Box sx={ { display : 'flex', alignItems : 'center' } }>
+                  <Box sx={ { pr : 1 } }>
+                    <TextField
+                      type="number"
+                      size="sm"
+                      label="Amount"
+                      value={ amount }
+                     
+                     
+                      onChange={ (e) => setAmount(e.target.value) }
+                      placeholder="Amount"
+                    />
+                  </Box>
+                  <TextField
+                    size="sm"
+                    label="Period"
+                    value={ period }
+                    select
+                   
+                   
+                    onChange={ (e) => setPeriod(e.target.value) }
+                    fullWidth
+                  >
+                    { getPeriod().map((option) => (
+                      <MenuItem key={ option.value } value={ option.value }>
+                        { option.label }
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={ () => setRepeatOpen(false) }>Cancel</Button>
+                <Button variant="contained" color="primary" onClick={ () => setRepeatOpen(false) }>Done</Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+        ) }
+      </Box>
+    </LocalizationProvider>
+  );
+
   return (
     <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
       { !props.noLabel && (
@@ -549,7 +660,7 @@ const FieldDate = (props = {}) => {
         </Form.Text>
       ) }
     </Form.Group>
-  );
+  )
 };
 
 // export default

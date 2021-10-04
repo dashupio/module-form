@@ -1,36 +1,25 @@
 
 // import dependencies
 import React from 'react';
-import { Form } from '@dashup/ui';
+import { TextField } from '@dashup/ui';
 
 // text field
 const FieldNumber = (props = {}) => {
 
   // return text field
   return (
-    <Form.Group className={ props.noLabel ? '' : 'mb-3' } controlId={ props.field.uuid }>
-      { !props.noLabel && (
-        <Form.Label>
-          { props.field.label || (
-            <a href="#!" onClick={ (e) => !props.onConfig(props.field) && e.preventDefault() }>
-              <i>Set Label</i>
-            </a>
-          ) }  
-        </Form.Label>
-      ) }
-      <Form.Control
-        type="number"
-        onChange={ (e) => props.onChange(props.field, parseFloat(e.target.value)) }
-        readOnly={ props.readOnly }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
-      />
-      { !!props.field.help && !props.noLabel && (
-        <Form.Text className="form-help">
-          { props.field.help }
-        </Form.Text>
-      ) }
-    </Form.Group>
+    <TextField
+      type="number"
+      label={ props.field.label }
+     
+     
+      readOnly={ props.readOnly }
+      onChange={ (e) => props.onChange(props.field, e.target.value) }
+      fullWidth
+      helperText={ props.field.help }
+      placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+      defaultValue={ props.value }
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 
 // import dependencies
-import { Button, Page, Form } from '@dashup/ui';
+import { Box, Icon, ToolTip, Paper, Button, IconButton, Page, Form, Container, LoadingButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // create model page
@@ -136,114 +136,119 @@ const FormPage = (props = {}) => {
 
   // return jsx
   return (
-    <Page { ...props } loading={ loading } require={ required } bodyClass="flex-column">
+    <Page { ...props } loading={ loading } require={ required }>
 
       <Page.Share show={ share } onHide={ (e) => setShare(false) } />
       <Page.Config show={ config } onHide={ (e) => setConfig(false) } />
 
       <Page.Menu onConfig={ () => setConfig(true) } presence={ props.presence } onShare={ () => setShare(true) }>
         { props.dashup.can(props.page, 'manage') && (
-          <button className={ `me-2 btn btn-${!updating ? 'link text-dark' : 'primary'}` } onClick={ (e) => setUpdating(!updating) }>
-            <i className={ `fat fa-${!updating ? 'pencil' : 'check'} me-2` } />
-            { !updating ? 'Alter Form' : 'Finish Altering' }
-          </button>
+          <Button variant="contained" color={ updating ? 'success' : 'primary' } onClick={ () => setUpdating(!updating) }>
+            { updating ? 'Finish' : 'Update Form' }
+          </Button>
         ) }
       </Page.Menu>
-      { route === 'remove' ? (
-        <Page.Body>
-          <div className="px-0 px-lg-3 container-lg">
-            <div className="card">
-              <div className="card-body text-center">
-                <h1 className="my-5">
-                  Are you sure you want to remove this item?
-                </h1>
-              </div>
+      <Page.Body>
+        <Container maxWidth="lg">
+          <Paper
+            sx={ {
+              p : 2,
+              position : 'relative',
+            } }
+          >
+            <Form
+              id={ props.page.get('_id') }
+              data={ actualData }
+              page={ props.page }
+              fields={ props.page.get('data.fields') || [] }
+              dashup={ props.dashup }
+              setData={ setData }
+              updating={ props.dashup.can(props.page, 'manage') && updating }
+              onSubmit={ (e) => onSubmit(e) }
+              getForms={ props.getForms }
+              getField={ props.getField }
+              getFields={ props.getFields }
+              setFields={ setFields }
+              available={ props.available.fields }
+              setPrevent={ setPrevent }
+              getFieldStruct={ props.getFieldStruct }
+              />
+            <Box
+              sx={ {
+                pt : 2,
+                display : 'flex',
+              } }
+            >
+              <Box sx={ {
+                ml : 'auto',
+              } }>
+                { !!props.item?.get('_id') && (
+                  <>
+                    <ToolTip title="Remove">
+                      <IconButton variant="text" onClick={ (e) => setRoute('remove') } sx={ { mr : 1 } }>
+                        <Icon>
+                          <i className="fa fa-fw fa-trash" />
+                        </Icon>
+                      </IconButton>
+                    </ToolTip>
+                    <ToolTip title="Create New">
+                      <IconButton variant="text" onClick={ (e) => onCreate(e) } sx={ { mr : 1 } }>
+                        <Icon>
+                          <i className="fa fa-fw fa-plus text-base" />
+                        </Icon>
+                      </IconButton>
+                    </ToolTip>
+                  </>
+                ) }
+                <LoadingButton disabled={ prevent || submitting } variant="contained" color="success" onClick={ (e) => onSubmit(e) }>
+                  { submitting ? 'Submitting...' : 'Submit' }
+                </LoadingButton>
+              </Box>
+            </Box>
+          </Paper>
+        </Container>
 
-              <div className="card-footer d-flex pt-0 pb-3">
-                <Button variant="info" className="me-auto" onClick={ (e) => setRoute(null) }>
-                  Back
-                </Button>
-                <Button variant="danger" className="ms-auto" onClick={ (e) => onRemove(e) }>
-                  { removing ? 'Removing...' : 'Remove' }
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Page.Body>
-      ) : (
-        <Page.Body>
-          <div className="px-0 px-lg-3 container-lg">
-            <div className="card">
-              { success ? (
-                <>
-                  <div className="card-body text-center">
-                    <h1 className="my-5">
-                      Successfully submitted { props.page.get('name') }.
-                    </h1>
-                  </div>
-                  <div className="card-footer d-flex pt-0 pb-3">
-                    <Button variant="info" className="me-auto" onClick={ (e) => setSuccess(false) }>
-                      Back
-                    </Button>
-                    <Button variant="success" className="ms-auto" onClick={ (e) => !props.setItem(null) && !setActualData({}) && !setSuccess(false) }>
-                      Create New
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="card-body p-relative">
-                    { !creating && (
-                      <Form
-                        id={ props.page.get('_id') }
-                        data={ actualData }
-                        page={ props.page }
-                        fields={ props.page.get('data.fields') || [] }
-                        dashup={ props.dashup }
-                        setData={ setData }
-                        updating={ props.dashup.can(props.page, 'manage') && updating }
-                        onSubmit={ (e) => onSubmit(e) }
-                        getForms={ props.getForms }
-                        getField={ props.getField }
-                        getFields={ props.getFields }
-                        setFields={ setFields }
-                        available={ props.available.fields }
-                        setPrevent={ setPrevent }
-                        getFieldStruct={ props.getFieldStruct }
-                        />
-                    ) }
-                  </div>
-                  <div className="card-footer d-flex pt-0 pb-3">
-                    { submitting ? (
-                      <Button disabled variant="success" className="ms-auto">
-                        { props.item && props.item.get('_id') ? 'Updating...' : 'Submitting...' }
-                      </Button>
-                    ) : (
-                      <>
-                        { !!props.item && !!props.item.get('_id') && (
-                          <>
-                            { !!props.dashup.can(props.page, 'submit') && (
-                              <Button variant="danger" className="me-2" onClick={ (e) => setRoute('remove') }>
-                                Remove
-                              </Button>
-                            ) }
-                            <Button variant="info" className="me-auto" onClick={ (e) => onCreate(e) }>
-                              Create New
-                            </Button>
-                          </>
-                        ) }
-                        <Button variant="success" className="ms-auto" disabled={ !updated || prevent } onClick={ (e) => onSubmit(e) }>
-                          { prevent ? 'Uploading...' : (props.item && props.item.get('_id') ? 'Update' : 'Submit') }
-                        </Button>
-                      </>
-                    ) }
-                  </div>
-                </>
-              ) }
-            </div>
-          </div>
-        </Page.Body>
-      ) }
+        <Dialog
+          open={ success }
+          onClose={ () => setSuccess(false) }
+        >
+          <DialogTitle>
+            Successfully Submitted
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Great work, that was saved successfully
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ () => setSuccess(false) } variant="contained">
+              Continue
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={ route === 'remove' }
+          onClose={ () => setSuccess(false) }
+        >
+          <DialogTitle>
+            Confirm Remove
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to remove this item?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={ () => setRoute(null) } disabled={ removing }>
+              Cancel
+            </Button>
+            <LoadingButton onClick={ (e) => onRemove(e) } loading={ removing } color="error" variant="contained">
+              { removing ? 'Removing...' : 'Confirm' }
+            </LoadingButton>
+          </DialogActions>
+        </Dialog>
+      </Page.Body>
     </Page>
   );
 };
