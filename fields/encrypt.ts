@@ -106,6 +106,11 @@ export default class FieldEncrypt extends Struct {
    */
   async submitAction(opts, field, value) {
     // set value as one way
+    if (!value) {
+      return {
+        value : opts.old,
+      };
+    }
 
     // encrypt value
     const encrypted = crypto.createHmac('sha256', this.dashup.config.encryptSecret)

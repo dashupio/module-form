@@ -10,8 +10,6 @@ const FieldText = (props = {}) => {
   return (
     <TextField
       label={ props.field.label }
-     
-     
       readOnly={ props.readOnly }
       onChange={ (e) => props.onChange(props.field, e.target.value) }
       fullWidth

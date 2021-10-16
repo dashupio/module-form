@@ -120,13 +120,10 @@ export default class FileField extends Struct {
       }, 'file').findById(id).then(resolve);
     });
 
-    // add timeout
-    loading[id].then(() => {
-      // cache for 2 seconds
-      setTimeout(() => {
-        delete loading[id];
-      }, 2000);
-    });
+    // cache for 2 seconds
+    setTimeout(() => {
+      delete loading[id];
+    }, 60 * 1000);
 
     // return loading
     return loading[id];
