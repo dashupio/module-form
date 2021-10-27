@@ -1,8 +1,8 @@
 
 // import dependencies
-import { Form } from '@dashup/ui';
 import validator from 'email-validator';
 import React, { useState } from 'react';
+import { Form, InputGroup } from '@dashup/ui';
 
 // text field
 const FieldEmail = (props = {}) => {
@@ -26,16 +26,19 @@ const FieldEmail = (props = {}) => {
           ) }  
         </Form.Label>
       ) }
-      <Form.Control
-        type="email"
-        onBlur={ (e) => setValid(isValid(e.target.value)) }
-        isValid={ valid === true }
-        onChange={ (e) => props.onChange(props.field, e.target.value) }
-        readOnly={ props.readOnly }
-        isInvalid={ valid === false }
-        placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
-        defaultValue={ props.value }
+      <InputGroup>
+        <InputGroup.Text>$</InputGroup.Text>
+        <Form.Control
+          type="email"
+          onBlur={ (e) => setValid(isValid(e.target.value)) }
+          isValid={ valid === true }
+          onChange={ (e) => props.onChange(props.field, e.target.value) }
+          readOnly={ props.readOnly }
+          isInvalid={ valid === false }
+          placeholder={ props.field.placeholder || `Enter ${props.field.label}` }
+          defaultValue={ props.value }
         />
+      </InputGroup>
       { !!props.field.help && !props.noLabel && (
         <Form.Text className="form-help">
           { props.field.help }

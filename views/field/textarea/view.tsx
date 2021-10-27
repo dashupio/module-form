@@ -8,7 +8,7 @@ const FieldTextareaView = (props = {}) => {
   // return text field
   return (
     <>
-      { typeof props.value === 'string' ? props.value : `${JSON.stringify(props.value)}` }
+      { typeof props.value === 'string' ? props.value : `${JSON.stringify(props.value || '')}` }
     </>
   );
 };

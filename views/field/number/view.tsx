@@ -8,7 +8,7 @@ const FieldNumberView = (props = {}) => {
   // return text field
   return (
     <>
-      { `${props.value}` }
+      { `${props.value || ''}` }
     </>
   );
 };

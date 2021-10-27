@@ -173,7 +173,7 @@ const FormPage = (props = {}) => {
       ) : (
         <Page.Body>
           <div className="px-0 px-lg-3 container-lg">
-            <div className="card">
+            <div className="card mb-3">
               { success ? (
                 <>
                   <div className="card-body text-center">
@@ -213,7 +213,7 @@ const FormPage = (props = {}) => {
                         />
                     ) }
                   </div>
-                  <div className="card-footer d-flex pt-0 pb-3">
+                  <div className="card-footer d-flex">
                     { submitting ? (
                       <Button disabled variant="success" className="ms-auto">
                         { props.item && props.item.get('_id') ? 'Updating...' : 'Submitting...' }

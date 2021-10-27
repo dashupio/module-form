@@ -1,10 +1,12 @@
 
 // import dependencies
-import React from 'react';
 import { Form } from '@dashup/ui';
+import React, { useState } from 'react';
 
 // text field
 const FieldCheckbox = (props = {}) => {
+  // show completed
+  const [showCompleted, setShowCompleted] = useState(false);
 
   // return text field
   return (
@@ -20,7 +22,7 @@ const FieldCheckbox = (props = {}) => {
       ) }
       { (props.field.options || []).map((option, i) => {
         // hide completed
-        if (props.field.completed && (props.value || []).includes(option.value)) return null;
+        if (!showCompleted && props.field.completed && (props.value || []).includes(option.value)) return null;
         
         // return jsx
         return (
@@ -35,10 +37,21 @@ const FieldCheckbox = (props = {}) => {
           />
         );
       }) }
+      { !!props.field.completed && !!(props.value || []).length && (
+        <div>
+          <Form.Text className="form-help">
+            <a href="#!" onClick={ (e) => !setShowCompleted(!showCompleted) && e.preventDefault() }>
+              { showCompleted ? 'Hide' : 'Show' } completed items
+            </a>
+          </Form.Text>
+        </div>
+      ) }
       { !!props.field.help && !props.noLabel && (
-        <Form.Text className="form-help">
-          { props.field.help }
-        </Form.Text>
+        <div>
+          <Form.Text className="form-help">
+            { props.field.help }
+          </Form.Text>
+        </div>
       ) }
     </Form.Group>
   );

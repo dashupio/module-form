@@ -19,6 +19,8 @@ const FieldPhone = (props = {}) => {
     // check parsed
     if (!parsed) return;
 
+    console.log('test', parsed);
+
     // get return
     const rtn = {
       code    : parsed.countryCallingCode,
@@ -56,9 +58,8 @@ const FieldPhone = (props = {}) => {
         value={ value?.number }
         country={ props.field.country }
         inputExtraProps={ {
-          name      : 'phone',
-          required  : props.field.required,
-          autoFocus : true
+          name     : 'phone',
+          required : props.field.required,
         } }
         onChange={ (val) => onChange(`+${val}`) }
         readOnly={ props.readOnly }
